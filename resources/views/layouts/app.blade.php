@@ -163,12 +163,60 @@
         .pulse { display:inline-block; width:6px; height:6px; border-radius:50%; background:#22c55e; animation:dot-pulse 2s infinite; }
 
         [x-cloak] { display:none !important; }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column !important;
+                overflow: auto !important;
+                height: auto !important;
+            }
+            #sidebar {
+                position: fixed !important;
+                top: 0 !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                transform: translateX(-100%) !important;
+                transition: transform 0.2s ease-in-out !important;
+                z-index: 100 !important;
+                height: 100vh !important;
+            }
+            #sidebar.open {
+                transform: translateX(0) !important;
+            }
+            #main {
+                height: auto !important;
+                overflow: visible !important;
+                display: flex !important;
+                flex-direction: column !important;
+            }
+            #topbar {
+                padding: 0 16px !important;
+                height: 56px !important;
+                min-height: 56px !important;
+            }
+            #page-content {
+                padding: 16px !important;
+                overflow: visible !important;
+            }
+            .mobile-menu-btn {
+                display: inline-flex !important;
+            }
+            .sidebar-backdrop {
+                position: fixed !important;
+                inset: 0 !important;
+                background: rgba(15, 23, 42, 0.4) !important;
+                backdrop-filter: blur(4px) !important;
+                z-index: 90 !important;
+            }
+        }
     </style>
 </head>
-<body>
+<body x-data="{ sidebarOpen: false }">
+
+<div class="sidebar-backdrop" x-show="sidebarOpen" @click="sidebarOpen = false" x-cloak style="display:none;"></div>
 
 <!-- ═══════════════════════════════ SIDEBAR ═══════════════════════════════ -->
-<aside id="sidebar">
+<aside id="sidebar" :class="sidebarOpen ? 'open' : ''">
 
     <!-- Brand -->
     <div class="sb-brand">
@@ -305,9 +353,14 @@
 
     <!-- Top Bar -->
     <header id="topbar">
-        <h1 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;font-weight:700;color:#1e293b;">
-            @yield('header_title', 'Dashboard')
-        </h1>
+        <div style="display:flex;align-items:center;gap:12px;">
+            <button @click.stop="sidebarOpen = !sidebarOpen" class="btn-icon mobile-menu-btn" style="display:none;width:34px;height:34px;align-items:center;justify-content:center;border-radius:8px;border:1px solid #cbd5e1;background:#fff;cursor:pointer;">
+                <i class="fa-solid fa-bars" style="color:#475569;font-size:14px;"></i>
+            </button>
+            <h1 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;font-weight:700;color:#1e293b;">
+                @yield('header_title', 'Dashboard')
+            </h1>
+        </div>
         <div style="display:flex;align-items:center;gap:12px;">
             <div class="ai-status">
                 <span class="pulse"></span>

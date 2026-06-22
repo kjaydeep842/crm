@@ -6,71 +6,71 @@
 
 @section('content')
 <!-- Back link and Print Actions -->
-<div class="flex items-center justify-between mb-8 print:hidden">
-    <a href="{{ route('documents.index') }}" class="text-xs font-bold text-slate-400 hover:text-slate-200 transition-colors flex items-center gap-1.5">
+<div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:24px;" class="print:hidden">
+    <a href="{{ route('documents.index') }}" class="btn btn-secondary">
         <i class="fa-solid fa-arrow-left"></i>
         <span>Back to Registry</span>
     </a>
     
-    <button onclick="window.print()" class="bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white px-5 py-2.5 rounded-xl text-xs font-bold shadow-lg shadow-emerald-600/15 border border-emerald-450/20 flex items-center gap-2">
+    <button onclick="window.print()" class="btn btn-primary">
         <i class="fa-solid fa-print"></i>
         <span>Print or Save PDF</span>
     </button>
 </div>
 
 <!-- Premium Print-ready Document Container -->
-<div class="glass-card rounded-3xl p-8 md:p-12 max-w-4xl mx-auto bg-white text-slate-800 shadow-2xl print:shadow-none print:bg-white print:p-0 print:border-none border border-slate-200/50 print:text-black">
+<div class="card" style="padding:48px; max-width:850px; margin:0 auto; background:#ffffff; box-shadow: 0 10px 30px rgba(0,0,0,0.04) !important; border:1px solid #e2e8f0; border-radius:16px; color:#1e293b;">
     
     <!-- Header Block -->
-    <div class="flex flex-col md:flex-row justify-between items-start gap-6 border-b border-slate-200 pb-8 mb-8">
+    <div style="display:flex; flex-wrap:wrap; justify-content:space-between; items-start: flex-start; gap:24px; border-bottom:1px solid #f1f5f9; padding-bottom:32px; margin-bottom:32px;">
         <div>
             <!-- Branding -->
-            <div class="flex items-center gap-2.5 mb-4">
-                <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center shadow shadow-indigo-600/30">
-                    <i class="fa-solid fa-cube text-white text-sm"></i>
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
+                <div style="width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg, #6366f1, #06b6d4); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 10px rgba(99, 102, 241, 0.2);">
+                    <i class="fa-solid fa-cube" style="color:#ffffff; font-size:14px;"></i>
                 </div>
-                <span class="font-extrabold text-base tracking-tight text-slate-900">Aura AI Enterprise</span>
+                <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:16px; font-weight:800; color:#1e293b;">Aura AI Enterprise</span>
             </div>
-            <span class="text-xs text-slate-500 block">Unit 4B, Cyber Towers, Phase II</span>
-            <span class="text-xs text-slate-500 block">HITEC City, Hyderabad, 500081</span>
-            <span class="text-xs text-slate-500 block">finance@auracrm.com | +91 40 44882200</span>
+            <span style="font-size:12px; color:#64748b; display:block; line-height:1.5;">Unit 4B, Cyber Towers, Phase II</span>
+            <span style="font-size:12px; color:#64748b; display:block; line-height:1.5;">HITEC City, Hyderabad, 500081</span>
+            <span style="font-size:12px; color:#64748b; display:block; line-height:1.5;">finance@auracrm.com | +91 40 44882200</span>
         </div>
 
-        <div class="text-left md:text-right">
-            <h1 class="text-2xl font-black text-slate-900 tracking-tight uppercase mb-1">{{ $document->type }}</h1>
-            <span class="text-xs text-slate-500 font-bold block">NO: <span class="font-mono text-slate-800">{{ $document->document_number }}</span></span>
-            <span class="text-xs text-slate-500 block mt-1">Date: {{ $document->created_at->format('d M, Y') }}</span>
+        <div style="text-align:right; min-width:200px;">
+            <h1 style="font-family:'Plus Jakarta Sans',sans-serif; font-size:24px; font-weight:800; color:#1e293b; letter-spacing:-0.02em; margin-bottom:4px; text-transform:uppercase;">{{ $document->type }}</h1>
+            <span style="font-size:12px; color:#64748b; font-weight:700; display:block;">NO: <span style="font-family:monospace; color:#1e293b;">{{ $document->document_number }}</span></span>
+            <span style="font-size:12px; color:#64748b; display:block; margin-top:4px;">Date: {{ $document->created_at->format('d M, Y') }}</span>
         </div>
     </div>
 
     <!-- Client Address Blocks -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 text-xs">
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:32px; margin-bottom:32px; font-size:12px; line-height:1.6;">
         <div>
-            <span class="text-[10px] text-slate-400 uppercase font-bold block mb-1.5">Prepared For:</span>
-            <span class="font-extrabold text-slate-900 text-sm block">{{ $document->lead->full_name ?? 'N/A' }}</span>
-            <span class="text-slate-700 block mt-1 font-semibold">{{ $document->lead->company_name ?? 'Individual Client' }}</span>
-            <span class="text-slate-500 block mt-1">{{ $document->lead->email ?? '' }}</span>
-            <span class="text-slate-500 block">{{ $document->lead->mobile ?? '' }}</span>
+            <span style="font-size:10px; color:#94a3b8; uppercase; font-weight:700; text-transform:uppercase; display:block; margin-bottom:6px; letter-spacing:0.05em;">Prepared For:</span>
+            <span style="font-weight:800; color:#1e293b; font-size:14px; display:block;">{{ $document->lead->full_name ?? 'N/A' }}</span>
+            <span style="color:#475569; display:block; font-weight:600; margin-top:2px;">{{ $document->lead->company_name ?? 'Individual Client' }}</span>
+            <span style="color:#64748b; display:block; margin-top:2px;">{{ $document->lead->email ?? '' }}</span>
+            <span style="color:#64748b; display:block;">{{ $document->lead->mobile ?? '' }}</span>
         </div>
 
-        <div class="text-left md:text-right">
-            <span class="text-[10px] text-slate-400 uppercase font-bold block mb-1.5">Commercial Terms:</span>
-            <span class="text-slate-700 block">Payment Method: Bank Transfer / UPI</span>
-            <span class="text-slate-700 block mt-1">Due Date: Net 15 Days</span>
-            <span class="text-slate-900 font-extrabold text-sm block mt-2">Valued At: ₹{{ number_format($document->amount, 2) }}</span>
+        <div style="text-align:right;">
+            <span style="font-size:10px; color:#94a3b8; uppercase; font-weight:700; text-transform:uppercase; display:block; margin-bottom:6px; letter-spacing:0.05em;">Commercial Terms:</span>
+            <span style="color:#475569; display:block;">Payment Method: Bank Transfer / UPI</span>
+            <span style="color:#475569; display:block; margin-top:2px;">Due Date: Net 15 Days</span>
+            <span style="color:#4f46e5; font-weight:800; font-size:14px; display:block; margin-top:8px;">Valued At: ₹{{ number_format($document->amount, 2) }}</span>
         </div>
     </div>
 
     <!-- Executive Summary -->
-    <div class="mb-8 text-xs leading-relaxed">
-        <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2 pb-1.5 border-b border-slate-100">1. Executive Summary</h3>
-        <p class="text-slate-650">{{ $document->content['executive_summary'] ?? 'This document sets forth the business and technical scope for custom software services.' }}</p>
+    <div style="margin-bottom:32px; font-size:12px; line-height:1.6;">
+        <h3 style="font-size:11px; font-weight:800; color:#1e293b; text-transform:uppercase; tracking-wider: 0.05em; margin-bottom:12px; padding-bottom:6px; border-bottom:1px solid #f1f5f9;">1. Executive Summary</h3>
+        <p style="color:#475569; text-align:justify; margin:0;">{{ $document->content['executive_summary'] ?? 'This document sets forth the business and technical scope for custom software services.' }}</p>
     </div>
 
     <!-- Scope list -->
-    <div class="mb-8 text-xs leading-relaxed">
-        <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3 pb-1.5 border-b border-slate-100">2. Scope of Services</h3>
-        <ul class="list-disc pl-5 space-y-2 text-slate-650">
+    <div style="margin-bottom:32px; font-size:12px; line-height:1.6;">
+        <h3 style="font-size:11px; font-weight:800; color:#1e293b; text-transform:uppercase; tracking-wider: 0.05em; margin-bottom:12px; padding-bottom:6px; border-bottom:1px solid #f1f5f9;">2. Scope of Services</h3>
+        <ul style="list-style-type:disc; padding-left:20px; margin:0; display:flex; flex-direction:column; gap:8px; color:#475569;">
             @if(isset($document->content['scope']) && is_array($document->content['scope']))
                 @foreach($document->content['scope'] as $scopeItem)
                     <li>{!! e($scopeItem) !!}</li>
@@ -83,50 +83,52 @@
     </div>
 
     <!-- Milestones and Deliverables table -->
-    <div class="mb-8 text-xs">
-        <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3 pb-1.5 border-b border-slate-100">3. Project Phases & Pricing</h3>
-        <table class="w-full text-left border-collapse border border-slate-200">
-            <thead>
-                <tr class="bg-slate-50 text-slate-800 font-bold border-b border-slate-200 text-[10px] uppercase">
-                    <th class="p-3 border-r border-slate-200">Phase</th>
-                    <th class="p-3 border-r border-slate-200">Deliverables & Scope</th>
-                    <th class="p-3 border-r border-slate-200">Timeline</th>
-                    <th class="p-3 text-right">Cost</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-200 text-slate-650">
-                @if(isset($document->content['milestones']) && is_array($document->content['milestones']))
-                    @foreach($document->content['milestones'] as $milestone)
+    <div style="margin-bottom:32px; font-size:12px;">
+        <h3 style="font-size:11px; font-weight:800; color:#1e293b; text-transform:uppercase; tracking-wider: 0.05em; margin-bottom:12px; padding-bottom:6px; border-bottom:1px solid #f1f5f9;">3. Project Phases & Pricing</h3>
+        <div style="border:1px solid #e2e8f0; border-radius:12px; overflow:hidden; background:#fafbff;">
+            <table class="data-table" style="margin:0; width:100%; border-collapse:collapse;">
+                <thead>
+                    <tr>
+                        <th style="padding:12px 16px; background:#fafbff; color:#64748b; font-size:10px; font-weight:700; border-bottom:1px solid #e2e8f0; text-transform:uppercase;">Phase</th>
+                        <th style="padding:12px 16px; background:#fafbff; color:#64748b; font-size:10px; font-weight:700; border-bottom:1px solid #e2e8f0; text-transform:uppercase;">Deliverables & Scope</th>
+                        <th style="padding:12px 16px; background:#fafbff; color:#64748b; font-size:10px; font-weight:700; border-bottom:1px solid #e2e8f0; text-transform:uppercase;">Timeline</th>
+                        <th style="padding:12px 16px; background:#fafbff; color:#64748b; font-size:10px; font-weight:700; border-bottom:1px solid #e2e8f0; text-transform:uppercase; text-align:right;">Cost</th>
+                    </tr>
+                </thead>
+                <tbody style="background:#ffffff;">
+                    @if(isset($document->content['milestones']) && is_array($document->content['milestones']))
+                        @foreach($document->content['milestones'] as $milestone)
+                            <tr>
+                                <td style="padding:12px 16px; border-bottom:1px solid #f1f5f9; font-weight:700; color:#1e293b;">{{ $milestone['phase'] ?? '' }}</td>
+                                <td style="padding:12px 16px; border-bottom:1px solid #f1f5f9; color:#475569;">{!! e($milestone['deliverables'] ?? '') !!}</td>
+                                <td style="padding:12px 16px; border-bottom:1px solid #f1f5f9; color:#475569;">{{ $milestone['timeline'] ?? '' }}</td>
+                                <td style="padding:12px 16px; border-bottom:1px solid #f1f5f9; text-align:right; font-weight:700; color:#1e293b;">{{ $milestone['cost'] ?? '' }}</td>
+                            </tr>
+                        @endforeach
+                    @else
                         <tr>
-                            <td class="p-3 border-r border-slate-200 font-bold text-slate-800">{{ $milestone['phase'] ?? '' }}</td>
-                            <td class="p-3 border-r border-slate-200">{!! e($milestone['deliverables'] ?? '') !!}</td>
-                            <td class="p-3 border-r border-slate-200">{{ $milestone['timeline'] ?? '' }}</td>
-                            <td class="p-3 text-right font-semibold text-slate-800">{{ $milestone['cost'] ?? '' }}</td>
+                            <td style="padding:12px 16px; border-bottom:1px solid #f1f5f9; font-weight:700; color:#1e293b;">Phase 1</td>
+                            <td style="padding:12px 16px; border-bottom:1px solid #f1f5f9; color:#475569;">Initial Analysis and Mockup Layouts</td>
+                            <td style="padding:12px 16px; border-bottom:1px solid #f1f5f9; color:#475569;">2 Weeks</td>
+                            <td style="padding:12px 16px; border-bottom:1px solid #f1f5f9; text-align:right; font-weight:700; color:#1e293b;">₹35,000</td>
                         </tr>
-                    @endforeach
-                @else
-                    <tr>
-                        <td class="p-3 border-r border-slate-200 font-bold">Phase 1</td>
-                        <td class="p-3 border-r border-slate-200">Initial Analysis and Mockup Layouts</td>
-                        <td class="p-3 border-r border-slate-200">2 Weeks</td>
-                        <td class="p-3 text-right font-semibold">₹35,000</td>
-                    </tr>
-                    <tr>
-                        <td class="p-3 border-r border-slate-200 font-bold">Phase 2</td>
-                        <td class="p-3 border-r border-slate-200">Functional Integration and API builds</td>
-                        <td class="p-3 border-r border-slate-200">4 Weeks</td>
-                        <td class="p-3 text-right font-semibold">₹65,000</td>
-                    </tr>
-                @endif
-            </tbody>
-        </table>
+                        <tr>
+                            <td style="padding:12px 16px; font-weight:700; color:#1e293b;">Phase 2</td>
+                            <td style="padding:12px 16px; color:#475569;">Functional Integration and API builds</td>
+                            <td style="padding:12px 16px; color:#475569;">4 Weeks</td>
+                            <td style="padding:12px 16px; text-align:right; font-weight:700; color:#1e293b;">₹65,000</td>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <!-- Terms -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-[11px] leading-relaxed pt-6 border-t border-slate-200">
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:32px; font-size:11px; line-height:1.6; padding-top:24px; border-top:1px solid #f1f5f9;">
         <div>
-            <h4 class="font-bold text-slate-900 mb-1.5 uppercase tracking-wider">Payment Terms</h4>
-            <ul class="list-disc pl-4 space-y-1 text-slate-600">
+            <h4 style="font-weight:800; color:#1e293b; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.02em;">Payment Terms</h4>
+            <ul style="list-style-type:disc; padding-left:16px; margin:0; display:flex; flex-direction:column; gap:6px; color:#475569;">
                 @if(isset($document->content['payment_terms']) && is_array($document->content['payment_terms']))
                     @foreach($document->content['payment_terms'] as $term)
                         <li>{{ $term }}</li>
@@ -139,8 +141,8 @@
         </div>
 
         <div>
-            <h4 class="font-bold text-slate-900 mb-1.5 uppercase tracking-wider">Terms & Conditions</h4>
-            <ul class="list-disc pl-4 space-y-1 text-slate-600">
+            <h4 style="font-weight:800; color:#1e293b; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.02em;">Terms & Conditions</h4>
+            <ul style="list-style-type:disc; padding-left:16px; margin:0; display:flex; flex-direction:column; gap:6px; color:#475569;">
                 @if(isset($document->content['terms_conditions']) && is_array($document->content['terms_conditions']))
                     @foreach($document->content['terms_conditions'] as $tc)
                         <li>{{ $tc }}</li>
@@ -154,19 +156,19 @@
     </div>
 
     <!-- Signatures block -->
-    <div class="flex justify-between items-end gap-12 pt-16 text-xs text-center">
-        <div class="w-44">
-            <div class="h-10 flex items-center justify-center">
-                <span class="font-mono text-slate-400 italic text-[10px]">Digitally signed by Aura AI</span>
+    <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:24px; padding-top:64px; font-size:12px; text-align:center;">
+        <div style="width:180px;">
+            <div style="height:40px; display:flex; align-items:center; justify-content:center;">
+                <span style="font-family:monospace; color:#94a3b8; font-style:italic; font-size:10px;">Digitally signed by Aura AI</span>
             </div>
-            <div class="border-t border-slate-300 pt-1.5 font-bold text-slate-700">Authorized Signatory</div>
-            <div class="text-[10px] text-slate-400 mt-0.5">Aura AI Enterprise Ltd</div>
+            <div style="border-top:1px solid #cbd5e1; padding-top:6px; font-weight:700; color:#475569;">Authorized Signatory</div>
+            <div style="font-size:10px; color:#94a3b8; margin-top:2px;">Aura AI Enterprise Ltd</div>
         </div>
 
-        <div class="w-44">
-            <div class="h-10"></div>
-            <div class="border-t border-slate-300 pt-1.5 font-bold text-slate-700">Client Signature</div>
-            <div class="text-[10px] text-slate-400 mt-0.5">{{ $document->lead->company_name ?? 'Individual Customer' }}</div>
+        <div style="width:180px;">
+            <div style="height:40px;"></div>
+            <div style="border-top:1px solid #cbd5e1; padding-top:6px; font-weight:700; color:#475569;">Client Signature</div>
+            <div style="font-size:10px; color:#94a3b8; margin-top:2px;">{{ $document->lead->company_name ?? 'Individual Customer' }}</div>
         </div>
     </div>
 
@@ -184,13 +186,13 @@
             padding: 0 !important;
             overflow: visible !important;
         }
-        aside, header, footer, .print\:hidden, nav, button {
+        aside, header, footer, .print\:hidden, nav, button, .btn {
             display: none !important;
         }
-        .glass-card {
+        .card {
             background: white !important;
             border: none !important;
-            backdrop-filter: none !important;
+            box-shadow: none !important;
             padding: 0 !important;
             margin: 0 !important;
         }

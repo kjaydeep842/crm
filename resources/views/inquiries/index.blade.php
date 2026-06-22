@@ -166,7 +166,7 @@
                  style="position:absolute; inset:0; background:rgba(15,23,42,0.4); backdrop-filter:blur(4px);"
                  @click="openLogModal = false"></div>
 
-            <div style="pointer-events:none; position:fixed; inset-y:0; right:0; display:flex; max-width:100%; padding-left:40px;">
+            <div style="pointer-events:none; position:fixed; top:0; bottom:0; right:0; display:flex; max-width:100%; padding-left:40px;">
                 <div x-show="openLogModal"
                      x-transition:enter="transform transition ease-in-out duration-300" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
                      x-transition:leave="transform transition ease-in-out duration-300" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full"

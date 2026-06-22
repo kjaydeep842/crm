@@ -211,6 +211,12 @@ body {
     border-left: 1px solid #e2e8f0 !important;
     box-shadow: -8px 0 40px rgba(0, 0, 0, 0.08) !important;
 }
+.drawer-body {
+    flex: 1 !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    padding: 24px !important;
+}
 
 /* Pagination Override */
 nav[role="navigation"] a,
@@ -229,3 +235,4 @@ nav[role="navigation"] span[aria-current] {
     color: #fff !important;
     border-color: #6366f1 !important;
 }
+
