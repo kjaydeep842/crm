@@ -11,6 +11,8 @@
     emailDraft: '', 
     whatsappDraft: '', 
     loadingFollowup: false,
+    sendingEmail: false,
+    sendingWhatsApp: false,
     generateFollowUp() {
         this.loadingFollowup = true;
         this.showFollowup = true;
@@ -33,6 +35,59 @@
             this.loadingFollowup = false;
             this.emailDraft = 'Failed to generate email follow-up.';
             this.whatsappDraft = 'Failed to generate WhatsApp follow-up.';
+        });
+    },
+    sendEmail(content) {
+        if (!content) return alert('No draft email content to send.');
+        this.sendingEmail = true;
+        fetch('{{ route('leads.send-email', $lead->id) }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ content: content })
+        })
+        .then(res => res.json())
+        .then(data => {
+            this.sendingEmail = false;
+            alert(data.message);
+            if (data.success) {
+                window.location.reload();
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            this.sendingEmail = false;
+            alert('Failed to send email.');
+        });
+    },
+    sendWhatsApp(content) {
+        if (!content) return alert('No draft WhatsApp message to send.');
+        this.sendingWhatsApp = true;
+        fetch('{{ route('leads.send-whatsapp', $lead->id) }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ content: content })
+        })
+        .then(res => res.json())
+        .then(data => {
+            this.sendingWhatsApp = false;
+            alert(data.message);
+            if (data.whatsapp_url) {
+                window.open(data.whatsapp_url, '_blank');
+            }
+            if (data.success) {
+                setTimeout(() => window.location.reload(), 1000);
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            this.sendingWhatsApp = false;
+            alert('Failed to send WhatsApp message.');
         });
     }
 }">
@@ -261,6 +316,12 @@
                                 <i class="fa-regular fa-copy"></i>
                             </button>
                         </div>
+                        <div style="margin-top:8px; display:flex; justify-content:flex-end;">
+                            <button @click="sendEmail(emailDraft)" class="btn btn-primary btn-sm" :disabled="sendingEmail">
+                                <span x-show="!sendingEmail"><i class="fa-regular fa-paper-plane"></i> Send Email</span>
+                                <span x-show="sendingEmail"><i class="fa-solid fa-circle-notch fa-spin"></i> Sending...</span>
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Whatsapp follow up -->
@@ -270,6 +331,12 @@
                             <textarea readonly rows="3" x-text="whatsappDraft" style="width:100%; border-radius:12px; background:#f8fafc; border:1px solid #e2e8f0; padding:12px; font-size:11px; font-family:monospace; color:#334155; resize:none; outline:none;"></textarea>
                             <button @click="navigator.clipboard.writeText(whatsappDraft); alert('WhatsApp draft copied to clipboard!')" style="position:absolute; top:8px; right:8px; background:#fff; border:1px solid #e2e8f0; padding:6px; border-radius:8px; color:#64748b; cursor:pointer;" title="Copy to clipboard">
                                 <i class="fa-regular fa-copy"></i>
+                            </button>
+                        </div>
+                        <div style="margin-top:8px; display:flex; justify-content:flex-end;">
+                            <button @click="sendWhatsApp(whatsappDraft)" class="btn btn-violet btn-sm" :disabled="sendingWhatsApp">
+                                <span x-show="!sendingWhatsApp"><i class="fa-brands fa-whatsapp"></i> Send WhatsApp</span>
+                                <span x-show="sendingWhatsApp"><i class="fa-solid fa-circle-notch fa-spin"></i> Sending...</span>
                             </button>
                         </div>
                     </div>

@@ -254,6 +254,134 @@ class LeadController extends Controller
         return response()->json($followup);
     }
 
+    public function sendEmail(Request $request, $id)
+    {
+        $lead = Lead::findOrFail($id);
+        $content = $request->input('content', '');
+
+        if (empty($lead->email)) {
+            return response()->json(['success' => false, 'message' => 'No email address registered for this lead.']);
+        }
+
+        try {
+            // Attempt live send if SMTP configuration is set in .env
+            if (config('mail.mailers.smtp.host') && config('mail.mailers.smtp.username')) {
+                \Illuminate\Support\Facades\Mail::raw($content, function ($message) use ($lead) {
+                    $message->to($lead->email)
+                            ->subject('Follow-up from Aura CRM');
+                });
+                $status = 'Live email sent successfully to ' . $lead->email;
+            } else {
+                // Graceful fallback
+                $status = 'Email simulated: Saved to activity logs (Configure SMTP mailer in .env to send live emails).';
+            }
+
+            // Create activity
+            Activity::create([
+                'lead_id' => $lead->id,
+                'user_id' => Auth::id(),
+                'type' => 'Email',
+                'description' => "Outgoing Email Follow-up Sent:\n" . substr($content, 0, 150) . "..."
+            ]);
+
+            return response()->json(['success' => true, 'message' => $status]);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Error sending email: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Error sending email: ' . $e->getMessage()]);
+        }
+    }
+
+    public function sendWhatsApp(Request $request, $id)
+    {
+        $lead = Lead::findOrFail($id);
+        $content = $request->input('content', '');
+
+        if (empty($lead->mobile)) {
+            return response()->json(['success' => false, 'message' => 'No mobile number registered for this lead.']);
+        }
+
+        $formattedPhone = preg_replace('/[^0-9]/', '', $lead->mobile);
+        // Ensure country code
+        if (strlen($formattedPhone) === 10) {
+            $formattedPhone = '91' . $formattedPhone; // default to India code
+        }
+
+        try {
+            $liveSent = false;
+            $status = '';
+
+            // Check Meta Cloud API settings in .env
+            $whatsappToken = env('WHATSAPP_API_TOKEN');
+            $phoneId = env('WHATSAPP_PHONE_NUMBER_ID');
+
+            if ($whatsappToken && $phoneId) {
+                // Meta Cloud API call
+                $response = \Illuminate\Support\Facades\Http::withToken($whatsappToken)
+                    ->post("https://graph.facebook.com/v17.0/{$phoneId}/messages", [
+                        'messaging_product' => 'whatsapp',
+                        'to' => $formattedPhone,
+                        'type' => 'text',
+                        'text' => ['body' => $content]
+                    ]);
+
+                if ($response->successful()) {
+                    $liveSent = true;
+                    $status = 'WhatsApp message sent live via Meta Cloud API!';
+                } else {
+                    \Illuminate\Support\Facades\Log::warning('Meta API failed: ' . $response->body());
+                }
+            }
+
+            // Check Twilio WhatsApp settings if Meta is not configured
+            if (!$liveSent && env('TWILIO_SID') && env('TWILIO_AUTH_TOKEN') && env('TWILIO_WHATSAPP_FROM')) {
+                // Twilio call
+                $sid = env('TWILIO_SID');
+                $token = env('TWILIO_AUTH_TOKEN');
+                $from = env('TWILIO_WHATSAPP_FROM');
+
+                $response = \Illuminate\Support\Facades\Http::asForm()
+                    ->withBasicAuth($sid, $token)
+                    ->post("https://api.twilio.com/2010-04-01/Accounts/{$sid}/Messages.json", [
+                        'From' => 'whatsapp:' . $from,
+                        'To' => 'whatsapp:+' . $formattedPhone,
+                        'Body' => $content
+                    ]);
+
+                if ($response->successful()) {
+                    $liveSent = true;
+                    $status = 'WhatsApp message sent live via Twilio API!';
+                } else {
+                    \Illuminate\Support\Facades\Log::warning('Twilio API failed: ' . $response->body());
+                }
+            }
+
+            // Generate desktop/mobile fallback redirection link
+            $whatsappWebUrl = 'https://wa.me/' . $formattedPhone . '?text=' . urlencode($content);
+
+            if (!$liveSent) {
+                $status = 'WhatsApp message logged. Click the WhatsApp Web link below to send manually.';
+            }
+
+            // Create activity
+            Activity::create([
+                'lead_id' => $lead->id,
+                'user_id' => Auth::id(),
+                'type' => 'WhatsApp',
+                'description' => "Outgoing WhatsApp Follow-up Sent:\n" . substr($content, 0, 150) . "..."
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => $status,
+                'live' => $liveSent,
+                'whatsapp_url' => $whatsappWebUrl
+            ]);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Error sending WhatsApp: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Error sending WhatsApp: ' . $e->getMessage()]);
+        }
+    }
+
     public function destroy($id)
     {
         $user = Auth::user();

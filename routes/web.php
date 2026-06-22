@@ -22,11 +22,15 @@ Route::middleware('guest')->group(function () {
 // Quick Sandbox Access (accessible without standard guest check for developer convenience)
 Route::get('/quick-login/{id}', [AuthController::class, 'quickLogin'])->name('quick-login');
 
+// Public Landing Page & Inquiries
+Route::get('/', [\App\Http\Controllers\LandingController::class, 'index'])->name('landing');
+Route::post('/inquire', [\App\Http\Controllers\LandingController::class, 'submitInquiry'])->name('public.inquire');
+
 // Protected Auth Routes
 Route::middleware('auth')->group(function () {
 
     // Dashboard
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/switch-user/{id}', [DashboardController::class, 'switchUser'])->name('switch-user');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -48,6 +52,8 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{id}', [LeadController::class, 'destroy'])->name('leads.destroy');
         Route::post('/{id}/trigger-ai', [LeadController::class, 'triggerAI'])->name('leads.trigger-ai');
         Route::post('/{id}/followup', [LeadController::class, 'generateFollowUp'])->name('leads.followup');
+        Route::post('/{id}/send-email', [LeadController::class, 'sendEmail'])->name('leads.send-email');
+        Route::post('/{id}/send-whatsapp', [LeadController::class, 'sendWhatsApp'])->name('leads.send-whatsapp');
     });
 
     // Inquiry Management
