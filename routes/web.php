@@ -22,9 +22,15 @@ Route::middleware('guest')->group(function () {
 // Quick Sandbox Access (accessible without standard guest check for developer convenience)
 Route::get('/quick-login/{id}', [AuthController::class, 'quickLogin'])->name('quick-login');
 
-// Public Landing Page & Inquiries
+// Public Pages & Inquiries
 Route::get('/', [\App\Http\Controllers\LandingController::class, 'index'])->name('landing');
 Route::post('/inquire', [\App\Http\Controllers\LandingController::class, 'submitInquiry'])->name('public.inquire');
+
+Route::get('/features', function() { return view('public.features'); })->name('public.features');
+Route::get('/how-it-works', function() { return view('public.how-it-works'); })->name('public.how-it-works');
+Route::get('/pricing', function() { return view('public.pricing'); })->name('public.pricing');
+Route::get('/about', function() { return view('public.about'); })->name('public.about');
+Route::get('/contact', function() { return view('public.contact'); })->name('public.contact');
 
 // Protected Auth Routes
 Route::middleware('auth')->group(function () {
