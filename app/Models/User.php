@@ -16,6 +16,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'google_id',         // google oauth id
+        'avatar',            // google profile picture
         'role',              // superadmin, admin, staff
         'organization_id',   // belongs to organization
         'staff_role',        // e.g. Sales, Support, Operations

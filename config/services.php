@@ -45,4 +45,10 @@ return [
         'verify_token' => env('WHATSAPP_VERIFY_TOKEN', 'crm_secret_token_123'),
     ],
 
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT_URI', '/auth/google/callback'),
+    ],
+
 ];
