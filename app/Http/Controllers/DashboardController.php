@@ -130,7 +130,23 @@ class DashboardController extends Controller
         // All users list for sandbox user switching
         $allUsers = User::all();
 
+        $org = clone $user->organization;
+        if (!$org && $user->isSuperAdmin()) {
+            $org = \App\Models\Organization::first();
+        }
+
+        $currentPackage = $org ? ucfirst($org->package) : 'Unknown';
+        $aiCreditsUsed = $org ? $org->ai_credits_used : 0;
+        $aiCreditLimit = $org ? $org->ai_credit_limit : 0;
+        $usersCount = $org ? $org->users()->count() : 0;
+        $maxUsers = $org ? $org->max_users : 0;
+
         return view('dashboard.index', compact(
+            'currentPackage',
+            'aiCreditsUsed',
+            'aiCreditLimit',
+            'usersCount',
+            'maxUsers',
             'totalLeads',
             'newLeads',
             'qualifiedLeads',

@@ -12,6 +12,8 @@ use App\Http\Controllers\AIAgentController;
 use App\Http\Controllers\EmployeeProductivityController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WhatsAppWebhookController;
+use App\Http\Controllers\WhatsappController;
 
 // Guest Auth Routes
 Route::middleware('guest')->group(function () {
@@ -107,11 +109,19 @@ Route::middleware('auth')->group(function () {
         Route::post('/refresh-report', [EmployeeProductivityController::class, 'generateNewReport'])->name('productivity.refresh-report');
     });
 
+    // WhatsApp Shared Inbox
+    Route::prefix('whatsapp')->group(function () {
+        Route::get('/', [WhatsappController::class, 'inbox'])->name('whatsapp.inbox');
+        Route::post('/', [WhatsappController::class, 'store'])->name('whatsapp.store');
+        Route::get('/{conversation}', [WhatsappController::class, 'show'])->name('whatsapp.show');
+        Route::post('/{conversation}/reply', [WhatsappController::class, 'reply'])->name('whatsapp.reply');
+    });
+
     // Reports & Forecasts
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 
 });
 
 // Live Webhook Endpoints (exempt from CSRF/auth for external services)
-Route::get('/webhook/whatsapp', [AIAgentController::class, 'whatsappVerify']);
-Route::post('/webhook/whatsapp', [AIAgentController::class, 'whatsappWebhook']);
+Route::get('/webhook/whatsapp', [WhatsAppWebhookController::class, 'verify']);
+Route::post('/webhook/whatsapp', [WhatsAppWebhookController::class, 'handle']);

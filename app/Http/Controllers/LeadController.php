@@ -210,6 +210,25 @@ class LeadController extends Controller
 
     protected function analyzeLeadAI(Lead $lead)
     {
+        $org = null;
+        if ($lead->assigned_to) {
+            $user = User::find($lead->assigned_to);
+            if ($user) $org = $user->organization;
+        }
+        if (!$org) $org = Auth::user() ? Auth::user()->organization : \App\Models\Organization::first();
+        
+        if ($org && !$org->hasAiCredits(10)) {
+            Activity::create([
+                'lead_id' => $lead->id,
+                'user_id' => Auth::id(),
+                'type' => 'AI Insight Error',
+                'description' => "AI Analysis failed: Package AI credit limit reached. Please upgrade your plan."
+            ]);
+            return;
+        }
+        
+        if ($org) $org->useAiCredits(10); // cost 10 credits
+
         // Call AI Service
         $analysis = $this->aiService->analyzeLead($lead->requirement);
 
@@ -249,6 +268,12 @@ class LeadController extends Controller
 
         $summary = $transcript ?: $lead->ai_summary ?: $lead->requirement;
 
+        $org = Auth::user()->organization;
+        if ($org && !$org->hasAiCredits(5)) {
+            return response()->json(['error' => 'Package AI credit limit reached. Please upgrade your plan.'], 403);
+        }
+        if ($org) $org->useAiCredits(5); // cost 5 credits
+
         $followup = $this->aiService->generateFollowUp($customerDetails, $summary);
 
         return response()->json($followup);
@@ -268,7 +293,7 @@ class LeadController extends Controller
             if (config('mail.mailers.smtp.host') && config('mail.mailers.smtp.username')) {
                 \Illuminate\Support\Facades\Mail::raw($content, function ($message) use ($lead) {
                     $message->to($lead->email)
-                            ->subject('Follow-up from Aura CRM');
+                            ->subject('Follow-up from DevineSky CRM');
                 });
                 $status = 'Live email sent successfully to ' . $lead->email;
             } else {

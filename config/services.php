@@ -35,4 +35,14 @@ return [
         ],
     ],
 
+    'openai' => [
+        'key' => env('OPENAI_API_KEY'),
+    ],
+
+    'whatsapp' => [
+        'token' => env('WHATSAPP_TOKEN'),
+        'phone_id' => env('WHATSAPP_PHONE_ID'),
+        'verify_token' => env('WHATSAPP_VERIFY_TOKEN', 'crm_secret_token_123'),
+    ],
+
 ];

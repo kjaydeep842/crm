@@ -1,5 +1,5 @@
 @extends('layouts.frontend')
-@section('title', 'Contact Us | Aura CRM')
+@section('title', 'Contact Us | DevineSky CRM')
 @section('content')
 <div class="page-header">
     <h1 data-aos="fade-up">Get in Touch</h1>
@@ -18,7 +18,7 @@
                 </div>
                 <div>
                     <h4 style="color:var(--dark); font-size:16px; margin-bottom:4px;">Email Us</h4>
-                    <p style="color:var(--text); font-size:14px;">hello@auracrm.ai</p>
+                    <p style="color:var(--text); font-size:14px;">hello@devinesky.com</p>
                 </div>
             </div>
             
@@ -28,7 +28,7 @@
                 </div>
                 <div>
                     <h4 style="color:var(--dark); font-size:16px; margin-bottom:4px;">Call Us</h4>
-                    <p style="color:var(--text); font-size:14px;">+1 (800) 555-AURA</p>
+                    <p style="color:var(--text); font-size:14px;">+1 (800) 555-DEVINESKY</p>
                 </div>
             </div>
             

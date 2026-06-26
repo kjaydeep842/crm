@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AuraCRM — @yield('header_title', 'Dashboard')</title>
+    <title>DevineSkyCRM — @yield('header_title', 'Dashboard')</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -224,7 +225,7 @@
             <i class="fa-solid fa-cube" style="color:#fff;font-size:14px;"></i>
         </div>
         <div>
-            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:800;background:linear-gradient(135deg,#1e293b,#4f46e5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1;">AURA</div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:800;background:linear-gradient(135deg,#1e293b,#4f46e5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1;">DEVINESKY</div>
             <div style="font-size:9px;font-weight:700;color:#6366f1;letter-spacing:.1em;text-transform:uppercase;">AI ENTERPRISE</div>
         </div>
     </div>
@@ -250,6 +251,9 @@
         </a>
         <a href="{{ route('tasks.index') }}" class="nav-item {{ Route::is('tasks.*') ? 'active' : '' }}">
             <i class="fa-solid fa-list-check"></i><span>Task Console</span>
+        </a>
+        <a href="{{ route('whatsapp.inbox') }}" class="nav-item {{ Route::is('whatsapp.*') ? 'active' : '' }}">
+            <i class="fa-brands fa-whatsapp"></i><span>WhatsApp Inbox</span>
         </a>
 
         <!-- Admin & SuperAdmin management sections -->

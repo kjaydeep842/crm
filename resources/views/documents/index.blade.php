@@ -119,7 +119,7 @@
 
                                     <p style="font-size:10px;color:#94a3b8;background:#fafbff;border:1px solid #e2e8f0;border-radius:8px;padding:10px;line-height:1.5;">
                                         <i class="fa-solid fa-robot" style="color:#6366f1;margin-right:4px;"></i>
-                                        Aura AI will automatically write complete business terms, project milestones, payment schedules, and scope details.
+                                        DevineSky AI will automatically write complete business terms, project milestones, payment schedules, and scope details.
                                     </p>
 
                                     <div style="display:flex;justify-content:flex-end;gap:10px;padding-top:10px;border-top:1px solid #f1f5f9;margin-top:4px;">

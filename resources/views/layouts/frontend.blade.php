@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Aura CRM - Enterprise AI Customer Relationship Management')</title>
+    <title>@yield('title', 'DevineSky - AI WhatsApp CRM & Sales Automation Platform')</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -255,7 +255,7 @@
             <div class="logo-box">
                 <i class="fa-solid fa-cube" style="color:#ffffff; font-size:18px;"></i>
             </div>
-            <span class="brand-name">AURA</span>
+            <span class="brand-name">DEVINESKY</span>
         </a>
         <button class="mobile-menu-btn" id="mobileMenuBtn">
             <i class="fa-solid fa-bars"></i>
@@ -279,7 +279,7 @@
         <div class="footer-content" data-aos="fade-up">
             <div class="footer-brand">
                 <i class="fa-solid fa-cube"></i>
-                <span>AURA</span>
+                <span>DEVINESKY</span>
             </div>
             <div class="footer-links" style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center;">
                 <a href="{{ route('public.features') }}" style="color:var(--text);text-decoration:none;">Features</a>
@@ -294,8 +294,8 @@
                 <a href="#"><i class="fa-brands fa-github"></i></a>
             </div>
         </div>
-        <p class="copyright" data-aos="fade-up" data-aos-delay="100">&copy; 2026 Aura AI Enterprise Ltd. All rights reserved.</p>
-        <p style="color:#475569; font-size:12px; margin-top: 10px;" data-aos="fade-up" data-aos-delay="200">Designed for high-performance and automated sales workflows.</p>
+        <p class="copyright" data-aos="fade-up" data-aos-delay="100">&copy; 2026 DevineSky AI Enterprise Ltd. All rights reserved.</p>
+        <p style="color:#475569; font-size:12px; margin-top: 10px;" data-aos="fade-up" data-aos-delay="200">The ultimate AI WhatsApp CRM & Sales Automation Platform.</p>
     </footer>
 
     <!-- AOS Animation JS -->

@@ -114,6 +114,20 @@ class InquiryController extends Controller
 
     protected function analyzeInquiryAI(Inquiry $inquiry)
     {
+        $user = Auth::user();
+        $org = $user ? clone $user->organization : null;
+        if (!$org && $user && $user->isSuperAdmin()) {
+            $org = clone \App\Models\Organization::first();
+        }
+
+        if ($org && !$org->hasAiCredits(2)) {
+            \Illuminate\Support\Facades\Log::warning("AI Analysis skipped for inquiry {$inquiry->id} due to package limit.");
+            return;
+        }
+        if ($org) {
+            $org->useAiCredits(2);
+        }
+
         $analysis = $this->aiService->analyzeLead($inquiry->message);
 
         $inquiry->update([
@@ -173,16 +187,28 @@ class InquiryController extends Controller
             'ai_recommended_department' => $inquiry->ai_recommended_department,
         ]);
 
-        // Trigger detailed Lead scoring & analysis
-        $analysis = $this->aiService->analyzeLead($lead->requirement);
-        $lead->update([
-            'ai_score' => $analysis['score'] ?? 60,
-            'ai_qualification' => $analysis['qualification'] ?? 'Warm Lead',
-            'ai_priority' => $analysis['priority'] ?? 'Medium',
-            'ai_recommended_followup' => $analysis['recommended_followup'] ?? '',
-            'ai_sales_probability' => $analysis['sales_probability'] ?? 50,
-            'ai_recommended_service' => $analysis['recommended_service'] ?? '',
-        ]);
+        $org = $user ? clone $user->organization : null;
+        if (!$org && $user && $user->isSuperAdmin()) {
+            $org = clone \App\Models\Organization::first();
+        }
+        
+        if ($org && !$org->hasAiCredits(10)) {
+            \Illuminate\Support\Facades\Log::warning("AI Analysis skipped for lead {$lead->id} during conversion due to package limit.");
+        } else {
+            if ($org) {
+                $org->useAiCredits(10);
+            }
+            // Trigger detailed Lead scoring & analysis
+            $analysis = $this->aiService->analyzeLead($lead->requirement);
+            $lead->update([
+                'ai_score' => $analysis['score'] ?? 60,
+                'ai_qualification' => $analysis['qualification'] ?? 'Warm Lead',
+                'ai_priority' => $analysis['priority'] ?? 'Medium',
+                'ai_recommended_followup' => $analysis['recommended_followup'] ?? '',
+                'ai_sales_probability' => $analysis['sales_probability'] ?? 50,
+                'ai_recommended_service' => $analysis['recommended_service'] ?? '',
+            ]);
+        }
 
         // Link inquiry to lead and mark processed
         $inquiry->update([

@@ -654,10 +654,10 @@
         
         <div class="ai-badge" data-aos="fade-down" data-aos-delay="100">
             <i class="fa-solid fa-wand-magic-sparkles"></i>
-            <span>Powered by Aura AI 2.0</span>
+            <span>Powered by DevineSky AI 2.0</span>
         </div>
         <h1 data-aos="fade-up" data-aos-delay="200">Enterprise CRM Redefined with <span>Autonomous AI Sales Copilots</span></h1>
-        <p data-aos="fade-up" data-aos-delay="300">Aura captures, scores, qualifies, and generates instant WhatsApp and email follow-up drafts for every inbound lead. Maximize your conversions automatically.</p>
+        <p data-aos="fade-up" data-aos-delay="300">DevineSky captures, scores, qualifies, and generates instant WhatsApp and email follow-up drafts for every inbound lead. Maximize your conversions automatically.</p>
         <div class="hero-actions" data-aos="fade-up" data-aos-delay="400">
             <a href="#demo" class="btn-primary">
                 <span>Start Free Trial</span>
@@ -728,7 +728,7 @@
     <section class="how-it-works" id="how-it-works">
         <div class="section-header" data-aos="fade-up">
             <span class="tag" style="color: #38bdf8;">Workflow</span>
-            <h2>How Aura AI Works</h2>
+            <h2>How DevineSky AI Works</h2>
             <p>Automate your entire sales process from lead capture to closing.</p>
         </div>
         <div class="steps">
@@ -736,13 +736,13 @@
                 <div class="step-number">1</div>
                 <div class="step-content">
                     <h3>Lead Capture</h3>
-                    <p>Integrate your forms, email, and social channels. Aura instantly captures all incoming lead data into a unified dashboard.</p>
+                    <p>Integrate your forms, email, and social channels. DevineSky instantly captures all incoming lead data into a unified dashboard.</p>
                 </div>
             </div>
             <div class="step" data-aos="fade-right" data-aos-delay="200">
                 <div class="step-number">2</div>
                 <div class="step-content">
-                    <h3>AI Analysis & Qualification</h3>
+                    <h3>DevineSky Analysis & Qualification</h3>
                     <p>Our proprietary AI engine analyzes intent, validates contact info, and scores the lead based on budget and urgency.</p>
                 </div>
             </div>
@@ -750,7 +750,7 @@
                 <div class="step-number">3</div>
                 <div class="step-content">
                     <h3>Automated Outreach</h3>
-                    <p>Aura drafts and schedules personalized email and WhatsApp follow-ups tailored to the lead's specific requirements.</p>
+                    <p>DevineSky drafts and schedules personalized email and WhatsApp follow-ups tailored to the lead's specific requirements.</p>
                 </div>
             </div>
         </div>

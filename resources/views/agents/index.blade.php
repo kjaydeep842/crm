@@ -46,7 +46,7 @@
             this.waChats.push({
                 sender: 'bot',
                 text: data.bot_response,
-                name: 'Aura AI',
+                name: 'DevineSky AI',
                 time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
             });
             alert('AI processed WhatsApp and created Lead ID: #L-' + data.lead.id);
@@ -61,7 +61,7 @@
     emailSenderName: 'Neha Rao',
     emailSenderEmail: 'neha.rao@retailcorp.in',
     emailSubject: 'Inquiry: B2B E-commerce Portal development',
-    emailBody: 'Dear Aura sales team,\n\nWe are looking to develop a B2B e-commerce store to manage distributor orders. The system needs to sync inventory. We have allocated a budget of ₹4,0,000.\n\nThanks,\nNeha Rao\nRetailCorp India',
+    emailBody: 'Dear DevineSky sales team,\n\nWe are looking to develop a B2B e-commerce store to manage distributor orders. The system needs to sync inventory. We have allocated a budget of ₹4,0,000.\n\nThanks,\nNeha Rao\nRetailCorp India',
     emailParsing: false,
     emailResult: null,
     parseEmail() {
@@ -115,7 +115,7 @@
                                 AI
                             </div>
                             <div>
-                                <span style="font-weight: 700; font-size: 12px; display: block;">AURA AI Assistant</span>
+                                <span style="font-weight: 700; font-size: 12px; display: block;">DEVINESKY AI Assistant</span>
                                 <span style="font-size: 9px; opacity: 0.85; display: block;">online</span>
                             </div>
                         </div>
@@ -140,7 +140,7 @@
 
                         <div x-show="waTyping" style="display: flex; align-items: center;">
                             <div style="background: #ffffff; border-radius: 12px; border-top-left-radius: 0; padding: 8px 12px; font-size: 12px; color: #667781; box-shadow: 0 1px 2px rgba(0,0,0,0.15);">
-                                <i class="fa-solid fa-circle-notch fa-spin style='color:#6366f1; margin-right:6px;'"></i> Aura AI typing...
+                                <i class="fa-solid fa-circle-notch fa-spin style='color:#6366f1; margin-right:6px;'"></i> DevineSky AI typing...
                             </div>
                         </div>
                     </div>

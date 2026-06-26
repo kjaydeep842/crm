@@ -60,10 +60,16 @@ class UserController extends Controller
             $user->role = $data['role'];
             $user->organization_id = $data['organization_id'];
             $user->staff_role = $data['staff_role'];
+            $org = Organization::find($data['organization_id']);
         } else {
             $user->role = 'staff';
             $user->organization_id = $currentUser->organization_id;
             $user->staff_role = $data['staff_role'];
+            $org = $currentUser->organization;
+        }
+
+        if ($org && !$org->canAddUser()) {
+            return redirect()->back()->with('error', 'Package user limit reached. Please upgrade to add more staff.');
         }
 
         $user->save();

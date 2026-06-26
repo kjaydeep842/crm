@@ -40,4 +40,9 @@ class Lead extends Model
     {
         return $this->hasMany(Activity::class)->latest();
     }
+
+    public function whatsappConversations()
+    {
+        return $this->hasMany(WhatsappConversation::class);
+    }
 }

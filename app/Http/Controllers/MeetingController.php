@@ -150,6 +150,12 @@ class MeetingController extends Controller
             }
         }
 
+        $org = $user->organization;
+        if ($org && !$org->hasAiCredits(5)) {
+            return redirect()->back()->with('error', 'Package AI credit limit reached. Please upgrade your plan.');
+        }
+        if ($org) $org->useAiCredits(5);
+
         // Call AI service to prep meeting details (we pass current lead details)
         $analysis = $this->aiService->analyzeLead($lead->requirement);
 
@@ -185,6 +191,12 @@ class MeetingController extends Controller
         $request->validate([
             'transcript' => 'required|string',
         ]);
+
+        $org = $user->organization;
+        if ($org && !$org->hasAiCredits(15)) {
+            return redirect()->back()->with('error', 'Package AI credit limit reached. Please upgrade your plan.');
+        }
+        if ($org) $org->useAiCredits(15);
 
         // Call AI Summary Service
         $summary = $this->aiService->summarizeMeeting($request->transcript);

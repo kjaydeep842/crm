@@ -109,7 +109,7 @@
                 <h3 style="font-size:16px; font-weight:800; color:#1e293b; padding-bottom:12px; margin-bottom:12px; border-bottom:1px solid #f1f5f9; display:flex; align-items:center; gap:8px;">
                     <i class="fa-solid fa-microphone-lines" style="color:#7c3aed;"></i> Post-Meeting Notes AI Processor
                 </h3>
-                <p style="font-size:12px; color:#64748b; margin-bottom:20px;">Paste the conversation transcript or raw bullet points from the call. Aura AI will summarize it, extract decisions, and auto-schedule follow-up tasks.</p>
+                <p style="font-size:12px; color:#64748b; margin-bottom:20px;">Paste the conversation transcript or raw bullet points from the call. DevineSky AI will summarize it, extract decisions, and auto-schedule follow-up tasks.</p>
 
                 <form action="{{ route('meetings.notes-ai', $meeting->id) }}" method="POST" style="display:flex; flex-direction:column; gap:16px; margin:0;">
                     @csrf

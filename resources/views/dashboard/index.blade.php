@@ -1,8 +1,41 @@
 @extends('layouts.app')
 
-@section('header_title', 'AURA Control Center')
+@section('header_title', 'DEVINESKY Control Center')
 
 @section('content')
+
+{{-- ── Plan Limits ── --}}
+<div style="background:linear-gradient(135deg, #1e293b, #0f172a); border-radius:14px; padding:20px 24px; margin-bottom:24px; display:flex; justify-content:space-between; align-items:center; color:#fff; box-shadow:0 10px 25px rgba(15,23,42,0.15);">
+    <div>
+        <div style="font-size:12px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:6px;">Current Plan</div>
+        <div style="display:flex; align-items:center; gap:12px;">
+            <h2 style="margin:0; font-size:24px; font-weight:800; color:#fff;">{{ $currentPackage }}</h2>
+            <a href="/pricing" style="background:rgba(255,255,255,0.1); color:#38bdf8; padding:4px 10px; border-radius:6px; font-size:11px; font-weight:700; text-decoration:none;">Upgrade</a>
+        </div>
+    </div>
+    <div style="display:flex; gap:32px;">
+        <div>
+            <div style="font-size:11px; font-weight:600; color:#94a3b8; margin-bottom:6px;">AI Credits Usage</div>
+            <div style="display:flex; align-items:center; gap:8px;">
+                <div style="width:120px; height:6px; background:rgba(255,255,255,0.1); border-radius:3px; overflow:hidden;">
+                    @php $aiPct = $aiCreditLimit > 0 ? min(100, ($aiCreditsUsed / $aiCreditLimit) * 100) : 0; @endphp
+                    <div style="width:{{ $aiPct }}%; height:100%; background:{{ $aiPct > 90 ? '#ef4444' : '#10b981' }};"></div>
+                </div>
+                <span style="font-size:13px; font-weight:700; color:#e2e8f0;">{{ number_format($aiCreditsUsed) }} / {{ $aiCreditLimit == 999999999 ? 'Unlimited' : number_format($aiCreditLimit) }}</span>
+            </div>
+        </div>
+        <div>
+            <div style="font-size:11px; font-weight:600; color:#94a3b8; margin-bottom:6px;">Team Seats</div>
+            <div style="display:flex; align-items:center; gap:8px;">
+                <div style="width:80px; height:6px; background:rgba(255,255,255,0.1); border-radius:3px; overflow:hidden;">
+                    @php $userPct = $maxUsers > 0 ? min(100, ($usersCount / $maxUsers) * 100) : 0; @endphp
+                    <div style="width:{{ $userPct }}%; height:100%; background:{{ $userPct > 90 ? '#ef4444' : '#38bdf8' }};"></div>
+                </div>
+                <span style="font-size:13px; font-weight:700; color:#e2e8f0;">{{ $usersCount }} / {{ $maxUsers == 999999999 ? 'Unlimited' : $maxUsers }}</span>
+            </div>
+        </div>
+    </div>
+</div>
 
 {{-- ── KPI Cards ── --}}
 <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;">

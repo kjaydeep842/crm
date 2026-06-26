@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AuraCRM — Sign In</title>
+    <title>DevineSkyCRM — Sign In</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -193,7 +193,7 @@
                 <div class="logo-box">
                     <i class="fa-solid fa-cube" style="color:#ffffff;font-size:16px;"></i>
                 </div>
-                <span class="brand-title">AuraCRM</span>
+                <span class="brand-title">DevineSkyCRM</span>
             </div>
             <p style="font-size:12px;color:#64748b;line-height:1.5;margin-bottom:32px;">
                 Intelligent Sales Automation with Multi-Tenancy Organization Structure.

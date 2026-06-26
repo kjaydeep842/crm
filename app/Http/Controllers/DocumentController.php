@@ -46,6 +46,19 @@ class DocumentController extends Controller
         ]);
 
         $lead = Lead::findOrFail($request->lead_id);
+        $user = Auth::user();
+        
+        $org = clone $user->organization;
+        if (!$org && $user->isSuperAdmin()) {
+            $org = clone \App\Models\Organization::first();
+        }
+        
+        if ($org && !$org->hasAiCredits(20)) {
+            return redirect()->back()->with('error', 'Package AI credit limit reached. Please upgrade your plan to generate more AI Documents.');
+        }
+        if ($org) {
+            $org->useAiCredits(20);
+        }
         
         // Call AI Service to generate document content
         $proposalData = $this->aiService->generateProposal(

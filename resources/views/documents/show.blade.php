@@ -29,11 +29,11 @@
                 <div style="width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg, #6366f1, #06b6d4); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 10px rgba(99, 102, 241, 0.2);">
                     <i class="fa-solid fa-cube" style="color:#ffffff; font-size:14px;"></i>
                 </div>
-                <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:16px; font-weight:800; color:#1e293b;">Aura AI Enterprise</span>
+                <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:16px; font-weight:800; color:#1e293b;">DevineSky AI Enterprise</span>
             </div>
             <span style="font-size:12px; color:#64748b; display:block; line-height:1.5;">Unit 4B, Cyber Towers, Phase II</span>
             <span style="font-size:12px; color:#64748b; display:block; line-height:1.5;">HITEC City, Hyderabad, 500081</span>
-            <span style="font-size:12px; color:#64748b; display:block; line-height:1.5;">finance@auracrm.com | +91 40 44882200</span>
+            <span style="font-size:12px; color:#64748b; display:block; line-height:1.5;">finance@devinesky.com | +91 40 44882200</span>
         </div>
 
         <div style="text-align:right; min-width:200px;">
@@ -159,10 +159,10 @@
     <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:24px; padding-top:64px; font-size:12px; text-align:center;">
         <div style="width:180px;">
             <div style="height:40px; display:flex; align-items:center; justify-content:center;">
-                <span style="font-family:monospace; color:#94a3b8; font-style:italic; font-size:10px;">Digitally signed by Aura AI</span>
+                <span style="font-family:monospace; color:#94a3b8; font-style:italic; font-size:10px;">Digitally signed by DevineSky AI</span>
             </div>
             <div style="border-top:1px solid #cbd5e1; padding-top:6px; font-weight:700; color:#475569;">Authorized Signatory</div>
-            <div style="font-size:10px; color:#94a3b8; margin-top:2px;">Aura AI Enterprise Ltd</div>
+            <div style="font-size:10px; color:#94a3b8; margin-top:2px;">DevineSky AI Enterprise Ltd</div>
         </div>
 
         <div style="width:180px;">
