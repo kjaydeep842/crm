@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Organization;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Models\ActivityLog;
+use App\Models\NotificationLog;
 
 class GoogleAuthController extends Controller
 {
@@ -51,6 +53,14 @@ class GoogleAuthController extends Controller
             }
 
             Auth::login($user);
+
+            // Log sign-in activity
+            ActivityLog::log('login', "{$user->name} signed in via Google", 'User', $user->id);
+
+            // Welcome notification for first-time Google users
+            if ($user->wasRecentlyCreated) {
+                NotificationLog::send($user->id, 'welcome', '👋 Welcome to DevineSkyCRM!', 'Your account has been created. Set up your organization profile to get started.', route('settings.organization'));
+            }
 
             return redirect()->route('dashboard');
 

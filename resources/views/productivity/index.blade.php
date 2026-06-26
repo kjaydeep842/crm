@@ -2,12 +2,37 @@
 
 @section('header_title', 'Team Productivity Hub')
 
+@section('styles')
+<style>
+    .productivity-layout-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 24px;
+        align-items: start;
+    }
+    .leaderboard-panel {
+        grid-column: span 2;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+    @media (max-width: 1024px) {
+        .productivity-layout-grid {
+            grid-template-columns: 1fr;
+        }
+        .leaderboard-panel {
+            grid-column: span 1;
+        }
+    }
+</style>
+@endsection
+
 @section('content')
 <!-- Metric table Grid -->
-<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:24px; align-items:start;">
+<div class="productivity-layout-grid">
     
     <!-- Left Column: Productivity Leaderboard Table -->
-    <div style="grid-column: span 2; display:flex; flex-direction:column; gap:24px;">
+    <div class="leaderboard-panel">
         <div class="card" style="padding:0; overflow:hidden;">
             <div style="padding:16px 20px; border-bottom:1px solid #f1f5f9; display:flex; align-items:center; justify-content:space-between; background:#fafbff;">
                 <div>

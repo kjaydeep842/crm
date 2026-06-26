@@ -1,68 +1,181 @@
 @extends('layouts.frontend')
-@section('title', 'Pricing | AI WhatsApp CRM')
+@section('title', 'Pricing | DevineSky')
+
+@section('styles')
+<style>
+    .pricing-header {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+    .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .pricing-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 48px 40px;
+        text-align: center;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+    .pricing-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+    }
+    .pricing-card.featured {
+        border: 2px solid var(--primary);
+        transform: scale(1.03);
+        box-shadow: 0 20px 40px rgba(79, 70, 229, 0.12);
+    }
+    .pricing-card.featured:hover {
+        transform: scale(1.03) translateY(-4px);
+    }
+    .featured-label {
+        position: absolute;
+        top: -16px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--primary);
+        color: #ffffff;
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+    }
+    .plan-name {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 24px;
+        font-weight: 800;
+        color: var(--dark);
+        margin-bottom: 12px;
+    }
+    .plan-price {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 48px;
+        font-weight: 800;
+        color: var(--dark);
+        margin-bottom: 8px;
+    }
+    .plan-price span {
+        font-size: 15px;
+        color: var(--text);
+        font-weight: 500;
+    }
+    .plan-sub {
+        font-size: 12px;
+        color: #64748b;
+        margin-bottom: 32px;
+    }
+    .features-list {
+        list-style: none;
+        text-align: left;
+        margin-bottom: 40px;
+    }
+    .features-list li {
+        margin-bottom: 16px;
+        font-size: 14px;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .features-list li i {
+        color: #10b981;
+        font-size: 16px;
+    }
+    .pricing-cta {
+        width: 100%;
+        padding: 14px;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 15px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .cta-outline {
+        background: transparent;
+        border: 1px solid var(--primary);
+        color: var(--primary);
+    }
+    .cta-outline:hover {
+        background: var(--primary);
+        color: #ffffff;
+    }
+    .cta-solid {
+        background: var(--primary);
+        color: #ffffff;
+    }
+    .cta-solid:hover {
+        background: var(--primary-hover);
+    }
+</style>
+@endsection
+
 @section('content')
 <div class="page-header">
-    <h1 data-aos="fade-up">Simple, Transparent Pricing</h1>
-    <p data-aos="fade-up" data-aos-delay="100">Scale your AI WhatsApp CRM as your business grows. High demand, recurring value.</p>
+    <h1 data-aos="fade-up">Simple, Predictable Billing</h1>
+    <p data-aos="fade-up" data-aos-delay="100">Upgrade your workspace securely via Razorpay. Choose between flexible Monthly Subscriptions or One-Time upgrades.</p>
 </div>
-<section class="section-padding" style="background:var(--surface);">
-    <div style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:30px;">
+
+<section class="section-padding" style="background:var(--bg-light);">
+    <div class="pricing-grid">
         
-        <!-- Starter -->
-        <div style="border:1px solid var(--border); border-radius:20px; padding:40px; text-align:center; transition:transform 0.3s; background:var(--bg-light);" data-aos="fade-up" data-aos-delay="100">
-            <h3 style="font-size:24px; color:var(--dark); margin-bottom:15px;">Starter</h3>
-            <div style="font-size:42px; font-weight:800; color:var(--dark); margin-bottom:20px; font-family:'Plus Jakarta Sans', sans-serif;">₹999<span style="font-size:16px; color:var(--text); font-weight:500;">/mo</span></div>
-            <p style="color:var(--text); margin-bottom:30px;">Perfect for small teams getting started.</p>
-            <ul style="list-style:none; text-align:left; margin-bottom:30px;">
-                <li style="margin-bottom:15px; color:var(--text); display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-check" style="color:#059669;"></i> Basic CRM Features</li>
-                <li style="margin-bottom:15px; color:var(--text); display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-check" style="color:#059669;"></i> Single WhatsApp Number</li>
-                <li style="margin-bottom:15px; color:var(--text); display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-check" style="color:#059669;"></i> 1,000 AI Credits/mo</li>
+        <!-- Plan 1 -->
+        <div class="pricing-card" data-aos="fade-up" data-aos-delay="100">
+            <h3 class="plan-name">Starter</h3>
+            <div class="plan-price">₹2,499<span>/mo</span></div>
+            <div class="plan-sub">or ₹23,999 one-time payment</div>
+            <ul class="features-list">
+                <li><i class="fa-solid fa-check"></i> Up to 5 Active Users</li>
+                <li><i class="fa-solid fa-check"></i> 1,000 AI Credits / month</li>
+                <li><i class="fa-solid fa-check"></i> Google OAuth Integration</li>
+                <li><i class="fa-solid fa-check"></i> Email Template Builder</li>
+                <li><i class="fa-solid fa-check"></i> Standard Security & Logging</li>
             </ul>
-            <button style="width:100%; padding:14px; border-radius:10px; font-weight:700; border:1px solid var(--primary); color:var(--primary); background:transparent; cursor:pointer;">Get Started</button>
+            <a href="{{ route('login') }}" style="text-decoration:none;"><button class="pricing-cta cta-outline">Get Started</button></a>
         </div>
 
-        <!-- Professional -->
-        <div style="border:1px solid var(--border); border-radius:20px; padding:40px; text-align:center; transition:transform 0.3s; background:var(--bg-light);" data-aos="fade-up" data-aos-delay="200">
-            <h3 style="font-size:24px; color:var(--dark); margin-bottom:15px;">Professional</h3>
-            <div style="font-size:42px; font-weight:800; color:var(--dark); margin-bottom:20px; font-family:'Plus Jakarta Sans', sans-serif;">₹2,999<span style="font-size:16px; color:var(--text); font-weight:500;">/mo</span></div>
-            <p style="color:var(--text); margin-bottom:30px;">Advanced features for growing sales teams.</p>
-            <ul style="list-style:none; text-align:left; margin-bottom:30px;">
-                <li style="margin-bottom:15px; color:var(--text); display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-check" style="color:#059669;"></i> Up to 5 Users</li>
-                <li style="margin-bottom:15px; color:var(--text); display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-check" style="color:#059669;"></i> Shared Team Inbox</li>
-                <li style="margin-bottom:15px; color:var(--text); display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-check" style="color:#059669;"></i> 10,000 AI Credits/mo</li>
-                <li style="margin-bottom:15px; color:var(--text); display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-check" style="color:#059669;"></i> Automated Follow-ups</li>
+        <!-- Plan 2 -->
+        <div class="pricing-card featured" data-aos="fade-up" data-aos-delay="200">
+            <div class="featured-label">Most Popular</div>
+            <h3 class="plan-name">Professional</h3>
+            <div class="plan-price">₹7,499<span>/mo</span></div>
+            <div class="plan-sub">or ₹71,999 one-time payment</div>
+            <ul class="features-list">
+                <li><i class="fa-solid fa-check"></i> Up to 15 Active Users</li>
+                <li><i class="fa-solid fa-check"></i> 10,000 AI Credits / month</li>
+                <li><i class="fa-solid fa-check"></i> WhatsApp Cloud API Webhooks</li>
+                <li><i class="fa-solid fa-check"></i> Dynamic PDF Invoice Downloads</li>
+                <li><i class="fa-solid fa-check"></i> Continuous Audit Tracking</li>
+                <li><i class="fa-solid fa-check"></i> Priority Email Support</li>
             </ul>
-            <button style="width:100%; padding:14px; border-radius:10px; font-weight:700; border:1px solid var(--primary); color:var(--primary); background:transparent; cursor:pointer;">Start Free Trial</button>
+            <a href="{{ route('login') }}" style="text-decoration:none;"><button class="pricing-cta cta-solid">Start Free Trial</button></a>
         </div>
 
-        <!-- Business -->
-        <div style="border:2px solid var(--primary); border-radius:20px; padding:40px; text-align:center; transform:scale(1.05); box-shadow:0 20px 40px rgba(79, 70, 229, 0.15); background:var(--surface); position:relative; z-index:1;" data-aos="fade-up" data-aos-delay="300">
-            <div style="position:absolute; top:-15px; left:50%; transform:translateX(-50%); background:var(--primary); color:white; padding:6px 16px; border-radius:20px; font-size:12px; font-weight:700; text-transform:uppercase;">Most Popular</div>
-            <h3 style="font-size:24px; color:var(--dark); margin-bottom:15px;">Business</h3>
-            <div style="font-size:42px; font-weight:800; color:var(--dark); margin-bottom:20px; font-family:'Plus Jakarta Sans', sans-serif;">₹7,999<span style="font-size:16px; color:var(--text); font-weight:500;">/mo</span></div>
-            <p style="color:var(--text); margin-bottom:30px;">For established businesses scaling operations.</p>
-            <ul style="list-style:none; text-align:left; margin-bottom:30px;">
-                <li style="margin-bottom:15px; color:var(--text); display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-check" style="color:#059669;"></i> Up to 15 Users</li>
-                <li style="margin-bottom:15px; color:var(--text); display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-check" style="color:#059669;"></i> Advanced API Integrations</li>
-                <li style="margin-bottom:15px; color:var(--text); display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-check" style="color:#059669;"></i> 50,000 AI Credits/mo</li>
-                <li style="margin-bottom:15px; color:var(--text); display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-check" style="color:#059669;"></i> Custom Sales Pipelines</li>
+        <!-- Plan 3 -->
+        <div class="pricing-card" data-aos="fade-up" data-aos-delay="300">
+            <h3 class="plan-name">Business</h3>
+            <div class="plan-price">₹19,999<span>/mo</span></div>
+            <div class="plan-sub">or ₹1,91,999 one-time payment</div>
+            <ul class="features-list">
+                <li><i class="fa-solid fa-check"></i> Up to 50 Active Users</li>
+                <li><i class="fa-solid fa-check"></i> 50,000 AI Credits / month</li>
+                <li><i class="fa-solid fa-check"></i> Dedicated OpenAI Agent Tuning</li>
+                <li><i class="fa-solid fa-check"></i> Custom Integrations & APIs</li>
+                <li><i class="fa-solid fa-check"></i> Complete Team Activity Auditing</li>
+                <li><i class="fa-solid fa-check"></i> 24/7 Dedicated Support manager</li>
             </ul>
-            <button style="width:100%; padding:14px; border-radius:10px; font-weight:700; background:var(--primary); color:white; border:none; cursor:pointer;">Start Free Trial</button>
+            <a href="{{ route('login') }}" style="text-decoration:none;"><button class="pricing-cta cta-outline">Contact Sales</button></a>
         </div>
 
-        <!-- Enterprise -->
-        <div style="border:1px solid var(--border); border-radius:20px; padding:40px; text-align:center; transition:transform 0.3s; background:var(--bg-light);" data-aos="fade-up" data-aos-delay="400">
-            <h3 style="font-size:24px; color:var(--dark); margin-bottom:15px;">Enterprise</h3>
-            <div style="font-size:42px; font-weight:800; color:var(--dark); margin-bottom:20px; font-family:'Plus Jakarta Sans', sans-serif;">₹15,000+<span style="font-size:16px; color:var(--text); font-weight:500;">/mo</span></div>
-            <p style="color:var(--text); margin-bottom:30px;">Dedicated solutions for large organizations.</p>
-            <ul style="list-style:none; text-align:left; margin-bottom:30px;">
-                <li style="margin-bottom:15px; color:var(--text); display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-check" style="color:#059669;"></i> Unlimited Users</li>
-                <li style="margin-bottom:15px; color:var(--text); display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-check" style="color:#059669;"></i> Unlimited AI Credits</li>
-                <li style="margin-bottom:15px; color:var(--text); display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-check" style="color:#059669;"></i> Custom AI Models</li>
-                <li style="margin-bottom:15px; color:var(--text); display:flex; align-items:center; gap:10px;"><i class="fa-solid fa-check" style="color:#059669;"></i> Dedicated Account Manager</li>
-            </ul>
-            <button style="width:100%; padding:14px; border-radius:10px; font-weight:700; border:1px solid var(--primary); color:var(--primary); background:transparent; cursor:pointer;">Contact Sales</button>
-        </div>
     </div>
 </section>
 @endsection

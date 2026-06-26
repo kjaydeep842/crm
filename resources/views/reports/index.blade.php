@@ -2,6 +2,26 @@
 
 @section('header_title', 'Analytics & Reports Hub')
 
+@section('styles')
+<style>
+    .forecast-header-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    @media (max-width: 576px) {
+        .forecast-header-card {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+        }
+        .forecast-header-card > div:last-child {
+            text-align: left !important;
+        }
+    }
+</style>
+@endsection
+
 @section('content')
 <div x-data="{ activeTab: 'leads' }">
 
@@ -174,7 +194,7 @@
     <!-- 5. Weighted Revenue Forecast Tab -->
     <div x-show="activeTab === 'forecast'" style="display: none; display:flex; flex-direction:column; gap:24px;">
         <!-- Total Forecast KPI -->
-        <div class="card p-6" style="display:flex; justify-content:space-between; align-items:center; border-radius:16px;">
+        <div class="card p-6 forecast-header-card" style="border-radius:16px;">
             <div>
                 <h3 style="font-size:14px; font-weight:700; color:#1e293b; margin-bottom:4px;">AI Weighted Sales Forecast</h3>
                 <p style="font-size:11px; color:#64748b;">Weighted totals (Deal budget multiplied by AI intent probability).</p>

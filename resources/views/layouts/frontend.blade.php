@@ -106,7 +106,7 @@
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 36px;
+            gap: 20px;
         }
         .nav-link {
             text-decoration: none;
@@ -226,26 +226,37 @@
             padding: 100px 5%;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1250px) {
             header { padding: 0 5%; }
             .mobile-menu-btn { display: block; }
             .nav-links { 
                 display: none; 
                 position: absolute;
                 top: 100%; left: 0; right: 0;
-                background: white;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(16px);
                 flex-direction: column;
-                padding: 20px;
-                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                padding: 24px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.08);
                 border-top: 1px solid var(--border);
+                gap: 18px;
+                align-items: stretch;
             }
             .nav-links.active { display: flex; }
+            .nav-link {
+                padding: 8px 0;
+                border-bottom: 1px solid #f1f5f9;
+                width: 100%;
+            }
+            .btn-login {
+                text-align: center;
+                margin-top: 10px;
+            }
             .footer-content { flex-direction: column; text-align: center; }
             .page-header h1 { font-size: 36px; }
         }
-        
-        @yield('styles')
     </style>
+    @yield('styles')
 </head>
 <body>
 
@@ -263,8 +274,10 @@
         <div class="nav-links" id="navLinks">
             <a href="{{ route('public.features') }}" class="nav-link">Features</a>
             <a href="{{ route('public.how-it-works') }}" class="nav-link">How it Works</a>
+            <a href="{{ route('public.integrations') }}" class="nav-link">Integrations</a>
+            <a href="{{ route('public.security') }}" class="nav-link">Security</a>
             <a href="{{ route('public.pricing') }}" class="nav-link">Pricing</a>
-            <a href="{{ route('public.about') }}" class="nav-link">About Us</a>
+            <a href="{{ route('public.faq') }}" class="nav-link">FAQ</a>
             <a href="{{ route('public.contact') }}" class="nav-link">Contact</a>
             <a href="{{ route('login') }}" class="btn-login">Client Portal</a>
         </div>
@@ -284,7 +297,10 @@
             <div class="footer-links" style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center;">
                 <a href="{{ route('public.features') }}" style="color:var(--text);text-decoration:none;">Features</a>
                 <a href="{{ route('public.how-it-works') }}" style="color:var(--text);text-decoration:none;">How it Works</a>
+                <a href="{{ route('public.integrations') }}" style="color:var(--text);text-decoration:none;">Integrations</a>
+                <a href="{{ route('public.security') }}" style="color:var(--text);text-decoration:none;">Security</a>
                 <a href="{{ route('public.pricing') }}" style="color:var(--text);text-decoration:none;">Pricing</a>
+                <a href="{{ route('public.faq') }}" style="color:var(--text);text-decoration:none;">FAQ</a>
                 <a href="{{ route('public.about') }}" style="color:var(--text);text-decoration:none;">About Us</a>
                 <a href="{{ route('public.contact') }}" style="color:var(--text);text-decoration:none;">Contact</a>
             </div>

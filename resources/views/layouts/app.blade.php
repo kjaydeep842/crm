@@ -211,6 +211,7 @@
             }
         }
     </style>
+    @yield('styles')
 </head>
 <body x-data="{ sidebarOpen: false }">
 
@@ -281,6 +282,14 @@
         </a>
         <a href="{{ route('reports.index') }}" class="nav-item {{ Route::is('reports.*') ? 'active' : '' }}">
             <i class="fa-solid fa-file-contract"></i><span>Analytic Reports</span>
+        </a>
+        <a href="{{ route('activity.log') }}" class="nav-item {{ Route::is('activity.*') ? 'active' : '' }}">
+            <i class="fa-solid fa-clock-rotate-left"></i><span>Activity Log</span>
+        </a>
+        @endif
+        @if($isAdmin || $isSuperAdmin)
+        <a href="{{ route('settings.organization') }}" class="nav-item {{ Route::is('settings.*') ? 'active' : '' }}">
+            <i class="fa-solid fa-gear"></i><span>Org Settings</span>
         </a>
         @endif
     </nav>
@@ -379,6 +388,20 @@
                 </button>
             </form>
             @endif
+            {{-- Notification Bell --}}
+            <div style="position:relative;" id="notif-wrapper">
+                <button onclick="toggleNotifications()" style="width:36px;height:36px;border-radius:50%;border:1px solid #e2e8f0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative;">
+                    <i class="fa-solid fa-bell" style="color:#475569;font-size:14px;"></i>
+                    <span id="notif-badge" style="position:absolute;top:-2px;right:-2px;background:#ef4444;color:#fff;font-size:9px;font-weight:700;width:16px;height:16px;border-radius:50%;display:none;align-items:center;justify-content:center;">0</span>
+                </button>
+                <div id="notif-panel" style="display:none;position:absolute;right:0;top:44px;width:320px;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.12);z-index:200;overflow:hidden;">
+                    <div style="padding:12px 16px;border-bottom:1px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center;">
+                        <span style="font-size:13px;font-weight:700;color:#1e293b;">Notifications</span>
+                        <button onclick="markAllRead()" style="font-size:11px;color:#6366f1;background:none;border:none;cursor:pointer;font-weight:600;">Mark all read</button>
+                    </div>
+                    <div id="notif-list" style="max-height:300px;overflow-y:auto;padding:8px;"></div>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -413,5 +436,63 @@
     </main>
 </div>
 
+<script>
+// ── Notification Bell ──
+let notifOpen = false;
+
+async function loadNotifications() {
+    try {
+        const res = await fetch('/notifications', {headers: {'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest'}});
+        const data = await res.json();
+        const badge = document.getElementById('notif-badge');
+        const list = document.getElementById('notif-list');
+        const unread = data.filter(n => !n.is_read);
+
+        if (unread.length > 0) {
+            badge.style.display = 'flex';
+            badge.textContent = unread.length > 9 ? '9+' : unread.length;
+        } else {
+            badge.style.display = 'none';
+        }
+
+        if (data.length === 0) {
+            list.innerHTML = '<p style="text-align:center;color:#94a3b8;font-size:12px;padding:20px;">No notifications yet.</p>';
+        } else {
+            list.innerHTML = data.slice(0,10).map(n => `
+                <div style="padding:10px;border-radius:8px;margin-bottom:4px;background:${n.is_read ? '#fff' : '#eef2ff'};border:1px solid ${n.is_read ? '#f1f5f9' : '#c7d2fe'};">
+                    <div style="font-size:12px;font-weight:600;color:#1e293b;margin-bottom:2px;">${n.title}</div>
+                    <div style="font-size:11px;color:#64748b;">${n.body || ''}</div>
+                </div>`).join('');
+        }
+    } catch(e) {}
+}
+
+function toggleNotifications() {
+    notifOpen = !notifOpen;
+    document.getElementById('notif-panel').style.display = notifOpen ? 'block' : 'none';
+    if (notifOpen) loadNotifications();
+}
+
+async function markAllRead() {
+    await fetch('/notifications/read', {
+        method: 'POST',
+        headers: {'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content, 'Content-Type': 'application/json'}
+    });
+    document.getElementById('notif-badge').style.display = 'none';
+    loadNotifications();
+}
+
+document.addEventListener('click', function(e) {
+    const wrapper = document.getElementById('notif-wrapper');
+    if (wrapper && !wrapper.contains(e.target)) {
+        document.getElementById('notif-panel').style.display = 'none';
+        notifOpen = false;
+    }
+});
+
+// Poll for notifications every 60 seconds
+loadNotifications();
+setInterval(loadNotifications, 60000);
+</script>
 </body>
 </html>

@@ -37,6 +37,9 @@ Route::get('/how-it-works', function() { return view('public.how-it-works'); })-
 Route::get('/pricing', function() { return view('public.pricing'); })->name('public.pricing');
 Route::get('/about', function() { return view('public.about'); })->name('public.about');
 Route::get('/contact', function() { return view('public.contact'); })->name('public.contact');
+Route::get('/faq', function() { return view('public.faq'); })->name('public.faq');
+Route::get('/integrations', function() { return view('public.integrations'); })->name('public.integrations');
+Route::get('/security', function() { return view('public.security'); })->name('public.security');
 
 // Protected Auth Routes
 Route::middleware('auth')->group(function () {
@@ -45,6 +48,29 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/switch-user/{id}', [DashboardController::class, 'switchUser'])->name('switch-user');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    // Notifications (API)
+    Route::get('/notifications', [\App\Http\Controllers\OrganizationSettingsController::class, 'notifications'])->name('notifications.index');
+    Route::post('/notifications/read', [\App\Http\Controllers\OrganizationSettingsController::class, 'markNotificationsRead'])->name('notifications.read');
+
+    // Activity Log
+    Route::get('/activity-log', [\App\Http\Controllers\OrganizationSettingsController::class, 'activityLog'])->name('activity.log');
+
+    // Organization Settings
+    Route::get('/settings/organization', [\App\Http\Controllers\OrganizationSettingsController::class, 'index'])->name('settings.organization');
+    Route::post('/settings/organization', [\App\Http\Controllers\OrganizationSettingsController::class, 'update'])->name('settings.organization.update');
+    Route::post('/settings/email-templates', [\App\Http\Controllers\OrganizationSettingsController::class, 'storeEmailTemplate'])->name('settings.email-templates.store');
+    Route::delete('/settings/email-templates/{id}', [\App\Http\Controllers\OrganizationSettingsController::class, 'destroyEmailTemplate'])->name('settings.email-templates.destroy');
+
+    // Razorpay Payments
+    Route::prefix('billing')->group(function () {
+        Route::get('/history', [\App\Http\Controllers\PaymentController::class, 'history'])->name('billing.history');
+        Route::get('/invoice/{id}', [\App\Http\Controllers\PaymentController::class, 'downloadInvoice'])->name('billing.invoice');
+        Route::post('/order/one-time', [\App\Http\Controllers\PaymentController::class, 'createOneTimeOrder'])->name('billing.order.one-time');
+        Route::post('/verify/one-time', [\App\Http\Controllers\PaymentController::class, 'verifyOneTime'])->name('billing.verify.one-time');
+        Route::post('/subscription/create', [\App\Http\Controllers\PaymentController::class, 'createSubscription'])->name('billing.subscription.create');
+        Route::post('/subscription/verify', [\App\Http\Controllers\PaymentController::class, 'verifySubscription'])->name('billing.subscription.verify');
+    });
 
     // Users & Organizations Management (Multitenancy)
     Route::prefix('users')->group(function () {
@@ -129,3 +155,4 @@ Route::middleware('auth')->group(function () {
 // Live Webhook Endpoints (exempt from CSRF/auth for external services)
 Route::get('/webhook/whatsapp', [WhatsAppWebhookController::class, 'verify']);
 Route::post('/webhook/whatsapp', [WhatsAppWebhookController::class, 'handle']);
+Route::post('/webhook/razorpay', [\App\Http\Controllers\PaymentController::class, 'webhook'])->name('webhook.razorpay');

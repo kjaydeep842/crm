@@ -2,10 +2,96 @@
 
 @section('header_title', 'DEVINESKY Control Center')
 
+@section('styles')
+<style>
+    .plan-limits-banner {
+        background: linear-gradient(135deg, #1e293b, #0f172a);
+        border-radius: 14px;
+        padding: 20px 24px;
+        margin-bottom: 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #fff;
+        box-shadow: 0 10px 25px rgba(15,23,42,0.15);
+    }
+    .plan-limits-stats {
+        display: flex;
+        gap: 32px;
+    }
+    .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+    .charts-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1.5fr;
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+    .bottom-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 16px;
+    }
+
+    @media (max-width: 1024px) {
+        .kpi-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        .charts-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+        .charts-grid > div:last-child {
+            grid-column: span 2;
+        }
+        .bottom-grid {
+            grid-template-columns: 1fr;
+        }
+        .bottom-grid > div:first-child {
+            grid-column: span 1 !important;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .plan-limits-banner {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+        }
+        .plan-limits-stats {
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+        .plan-limits-stats > div {
+            width: 100%;
+        }
+        .plan-limits-stats > div > div:last-child {
+            width: 100% !important;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .kpi-grid {
+            grid-template-columns: 1fr;
+        }
+        .charts-grid {
+            grid-template-columns: 1fr;
+        }
+        .charts-grid > div:last-child {
+            grid-column: span 1;
+        }
+    }
+</style>
+@endsection
+
 @section('content')
 
 {{-- ── Plan Limits ── --}}
-<div style="background:linear-gradient(135deg, #1e293b, #0f172a); border-radius:14px; padding:20px 24px; margin-bottom:24px; display:flex; justify-content:space-between; align-items:center; color:#fff; box-shadow:0 10px 25px rgba(15,23,42,0.15);">
+<div class="plan-limits-banner">
     <div>
         <div style="font-size:12px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:6px;">Current Plan</div>
         <div style="display:flex; align-items:center; gap:12px;">
@@ -13,7 +99,7 @@
             <a href="/pricing" style="background:rgba(255,255,255,0.1); color:#38bdf8; padding:4px 10px; border-radius:6px; font-size:11px; font-weight:700; text-decoration:none;">Upgrade</a>
         </div>
     </div>
-    <div style="display:flex; gap:32px;">
+    <div class="plan-limits-stats">
         <div>
             <div style="font-size:11px; font-weight:600; color:#94a3b8; margin-bottom:6px;">AI Credits Usage</div>
             <div style="display:flex; align-items:center; gap:8px;">
@@ -38,7 +124,7 @@
 </div>
 
 {{-- ── KPI Cards ── --}}
-<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;">
+<div class="kpi-grid">
 
     {{-- Total Leads --}}
     <div class="card" style="padding:20px;border-left:3px solid #06b6d4;position:relative;overflow:hidden;transition:transform .2s;">
@@ -97,7 +183,7 @@
 </div>
 
 {{-- ── Charts Row ── --}}
-<div style="display:grid;grid-template-columns:1fr 1fr 1.5fr;gap:16px;margin-bottom:24px;">
+<div class="charts-grid">
     {{-- Lead Sources --}}
     <div class="card" style="padding:18px;">
         <h3 style="font-size:12px;font-weight:700;color:#1e293b;margin-bottom:14px;display:flex;align-items:center;gap:6px;">
@@ -124,7 +210,7 @@
 </div>
 
 {{-- ── Bottom Section ── --}}
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
+<div class="bottom-grid">
 
     {{-- Recent Leads --}}
     <div class="card" style="padding:0;overflow:hidden;grid-column:span 2;">
@@ -136,47 +222,49 @@
                 See all <i class="fa-solid fa-arrow-right" style="font-size:9px;"></i>
             </a>
         </div>
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>Name & Company</th>
-                    <th>Status</th>
-                    <th style="text-align:right;">AI Score</th>
-                    <th style="text-align:right;">Budget</th>
-                    <th style="text-align:right;">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($recentLeads as $lead)
-                <tr>
-                    <td>
-                        <span style="font-weight:700;color:#1e293b;display:block;">{{ $lead->full_name }}</span>
-                        <span style="font-size:10px;color:#94a3b8;">{{ $lead->company_name ?: 'No Company' }}</span>
-                    </td>
-                    <td>
-                        @php
-                            $cls = match($lead->status) {
-                                'New'=>'b-new','Contacted'=>'b-contacted','Qualified'=>'b-qualified',
-                                'Won'=>'b-won','Lost'=>'b-lost',default=>'b-proposal'
-                            };
-                        @endphp
-                        <span class="badge {{ $cls }}">{{ $lead->status }}</span>
-                    </td>
-                    <td style="text-align:right;">
-                        <span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#eef2ff;color:#4f46e5;font-size:10px;font-weight:800;">{{ $lead->ai_score }}</span>
-                    </td>
-                    <td style="text-align:right;font-weight:700;color:#1e293b;">₹{{ number_format($lead->budget, 0) }}</td>
-                    <td style="text-align:right;">
-                        <a href="{{ route('leads.show', $lead->id) }}" class="btn btn-sm btn-light btn-icon">
-                            <i class="fa-solid fa-chevron-right" style="font-size:10px;"></i>
-                        </a>
-                    </td>
-                </tr>
-                @empty
-                <tr><td colspan="5" style="text-align:center;color:#94a3b8;padding:24px;">No leads logged yet.</td></tr>
-                @endforelse
-            </tbody>
-        </table>
+        <div style="overflow-x:auto; width:100%;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Name & Company</th>
+                        <th>Status</th>
+                        <th style="text-align:right;">AI Score</th>
+                        <th style="text-align:right;">Budget</th>
+                        <th style="text-align:right;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($recentLeads as $lead)
+                    <tr>
+                        <td>
+                            <span style="font-weight:700;color:#1e293b;display:block;">{{ $lead->full_name }}</span>
+                            <span style="font-size:10px;color:#94a3b8;">{{ $lead->company_name ?: 'No Company' }}</span>
+                        </td>
+                        <td>
+                            @php
+                                $cls = match($lead->status) {
+                                    'New'=>'b-new','Contacted'=>'b-contacted','Qualified'=>'b-qualified',
+                                    'Won'=>'b-won','Lost'=>'b-lost',default=>'b-proposal'
+                                };
+                            @endphp
+                            <span class="badge {{ $cls }}">{{ $lead->status }}</span>
+                        </td>
+                        <td style="text-align:right;">
+                            <span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#eef2ff;color:#4f46e5;font-size:10px;font-weight:800;">{{ $lead->ai_score }}</span>
+                        </td>
+                        <td style="text-align:right;font-weight:700;color:#1e293b;">₹{{ number_format($lead->budget, 0) }}</td>
+                        <td style="text-align:right;">
+                            <a href="{{ route('leads.show', $lead->id) }}" class="btn btn-sm btn-light btn-icon">
+                                <i class="fa-solid fa-chevron-right" style="font-size:10px;"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr><td colspan="5" style="text-align:center;color:#94a3b8;padding:24px;">No leads logged yet.</td></tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
 
     {{-- Right Panel: Employee + Tasks --}}

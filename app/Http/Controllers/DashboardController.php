@@ -130,7 +130,7 @@ class DashboardController extends Controller
         // All users list for sandbox user switching
         $allUsers = User::all();
 
-        $org = clone $user->organization;
+        $org = $user->organization;
         if (!$org && $user->isSuperAdmin()) {
             $org = \App\Models\Organization::first();
         }

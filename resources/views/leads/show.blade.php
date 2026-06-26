@@ -4,6 +4,27 @@
     Lead Console: {{ $lead->full_name }}
 @endsection
 
+@section('styles')
+<style>
+    @media (max-width: 1024px) {
+        .lead-details-grid {
+            grid-template-columns: 1fr !important;
+        }
+        .lead-main-panel {
+            grid-column: span 1 !important;
+        }
+    }
+    @media (max-width: 480px) {
+        .display-grid-2 {
+            grid-template-columns: 1fr !important;
+        }
+        .display-grid-3 {
+            grid-template-columns: 1fr !important;
+        }
+    }
+</style>
+@endsection
+
 @section('content')
 <div x-data="{ 
     openEditModal: false, 
@@ -126,7 +147,7 @@
     </div>
 
     <!-- Main Content Layout -->
-    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:24px; align-items:start;">
+    <div class="lead-details-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:24px; align-items:start;">
         
         <!-- Left Column: Core Lead Information -->
         <div style="display:flex; flex-direction:column; gap:24px;">
@@ -199,7 +220,7 @@
         </div>
 
         <!-- Middle Column: AI Sales Assistant Dashboard -->
-        <div style="grid-column: span 2; display:flex; flex-direction:column; gap:24px;">
+        <div class="lead-main-panel" style="grid-column: span 2; display:flex; flex-direction:column; gap:24px;">
             
             <!-- AI Sales Assistant Dashboard Panel -->
             <div class="card p-6" style="border-radius:20px; position:relative; overflow:hidden;">
@@ -523,7 +544,7 @@
                                     <input type="text" name="company_name" value="{{ $lead->company_name }}" class="form-input">
                                 </div>
 
-                                <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                                <div class="display-grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
                                     <div>
                                         <label class="form-label">Mobile Number</label>
                                         <input type="text" name="mobile" value="{{ $lead->mobile }}" class="form-input">
@@ -534,7 +555,7 @@
                                     </div>
                                 </div>
 
-                                <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                                <div class="display-grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
                                     <div>
                                         <label class="form-label">Website</label>
                                         <input type="text" name="website" value="{{ $lead->website }}" class="form-input">
@@ -545,7 +566,7 @@
                                     </div>
                                 </div>
 
-                                <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;">
+                                <div class="display-grid-3" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;">
                                     <div>
                                         <label class="form-label">Source</label>
                                         <select name="lead_source" class="form-input" style="background:#fff;">

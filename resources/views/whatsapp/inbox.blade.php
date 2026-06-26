@@ -2,11 +2,67 @@
 
 @section('header_title', 'WhatsApp Shared Inbox')
 
+@section('styles')
+<style>
+    .inbox-wrapper {
+        display: flex;
+        height: calc(100vh - 120px);
+        background: #fff;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        overflow: hidden;
+    }
+    .inbox-sidebar {
+        width: 350px;
+        border-right: 1px solid #e2e8f0;
+        background: #f8fafc;
+        display: flex;
+        flex-direction: column;
+    }
+    .inbox-chat {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background: #f1f5f9;
+    }
+    .back-to-chats {
+        display: none;
+    }
+    @media (max-width: 768px) {
+        .inbox-wrapper {
+            height: calc(100vh - 100px);
+        }
+        .inbox-sidebar {
+            width: 100% !important;
+            display: {{ isset($conversation) ? 'none !important' : 'flex !important' }};
+            border-right: none;
+        }
+        .inbox-chat {
+            width: 100% !important;
+            display: {{ isset($conversation) ? 'flex !important' : 'none !important' }};
+        }
+        .back-to-chats {
+            display: inline-flex !important;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            background: #f1f5f9;
+            color: #475569;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+    }
+</style>
+@endsection
+
 @section('content')
-<div style="display:flex; height:calc(100vh - 120px); background:#fff; border-radius:12px; border:1px solid #e2e8f0; overflow:hidden;">
+<div class="inbox-wrapper">
     
     {{-- Left Sidebar: Conversation List --}}
-    <div style="width:350px; border-right:1px solid #e2e8f0; background:#f8fafc; display:flex; flex-direction:column;">
+    <div class="inbox-sidebar">
         <div style="padding:16px; border-bottom:1px solid #e2e8f0; background:#fff; display:flex; justify-content:space-between; align-items:center;">
             <h3 style="margin:0; font-size:16px; font-weight:700; color:#1e293b;">Chats <span style="background:#dcf8c6; color:#059669; padding:2px 6px; border-radius:12px; font-size:11px; margin-left:6px;">{{ $conversations->count() }}</span></h3>
             <button onclick="document.getElementById('newChatModal').style.display='flex'" class="btn btn-sm btn-primary" style="padding:4px 8px; border-radius:6px; font-size:11px;">
@@ -82,17 +138,22 @@
     </div>
 
     {{-- Right Area: Chat Window --}}
-    <div style="flex:1; display:flex; flex-direction:column; background:#f1f5f9;">
+    <div class="inbox-chat">
         @if(isset($conversation))
             {{-- Chat Header --}}
             <div style="padding:16px 24px; background:#fff; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <h2 style="margin:0; font-size:18px; font-weight:700; color:#1e293b;">
-                        {{ $conversation->lead ? $conversation->lead->full_name : $conversation->phone_number }}
-                    </h2>
-                    <span style="font-size:12px; color:#64748b;">
-                        {{ $conversation->phone_number }} &bull; Status: {{ ucfirst($conversation->status) }}
-                    </span>
+                <div style="display:flex; align-items:center;">
+                    <a href="{{ route('whatsapp.inbox') }}" class="back-to-chats">
+                        <i class="fa-solid fa-arrow-left"></i> Chats
+                    </a>
+                    <div>
+                        <h2 style="margin:0; font-size:18px; font-weight:700; color:#1e293b;">
+                            {{ $conversation->lead ? $conversation->lead->full_name : $conversation->phone_number }}
+                        </h2>
+                        <span style="font-size:12px; color:#64748b;">
+                            {{ $conversation->phone_number }} &bull; Status: {{ ucfirst($conversation->status) }}
+                        </span>
+                    </div>
                 </div>
                 <div>
                     @if($conversation->lead)

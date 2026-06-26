@@ -32,6 +32,16 @@
             overflow: hidden;
         }
 
+        @media (max-width: 768px) {
+            .login-container {
+                grid-template-columns: 1fr;
+            }
+            .info-side {
+                border-right: none;
+                border-bottom: 1px solid #e2e8f0;
+            }
+        }
+
         /* Left Side: Brand info & credentials quick selector */
         .info-side {
             background: #fafbff;

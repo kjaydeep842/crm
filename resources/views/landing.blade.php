@@ -200,7 +200,7 @@
 }
 .grid-features {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 40px;
     max-width: 1200px;
     margin: 0 auto;
@@ -341,7 +341,7 @@
 }
 .pricing-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
     max-width: 1100px;
     margin: 0 auto;
@@ -721,6 +721,38 @@
                 <h3>Multi-Tenant Architecture</h3>
                 <p>Designed for organizations of all sizes. Separate and scale workspaces with strict SuperAdmin, Admin, and Staff RBAC permissions.</p>
             </div>
+            <!-- Feature 5 -->
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="icon-box" style="background:linear-gradient(135deg, #eef2ff, #e0e7ff); color:#4285f4;">
+                    <i class="fa-brands fa-google"></i>
+                </div>
+                <h3>Google SSO Login</h3>
+                <p>Allow admins, staff, and employees to securely sign in using their Google Workspace accounts with automatic organization resolution.</p>
+            </div>
+            <!-- Feature 6 -->
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="icon-box" style="background:linear-gradient(135deg, #f0fdf4, #dcfce7); color:#15803d;">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                </div>
+                <h3>Continuous Audit Trails</h3>
+                <p>Complete compliance tracking. Every key action, authentication event, and invoice payment logs the user's role and their client IP.</p>
+            </div>
+            <!-- Feature 7 -->
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="icon-box" style="background:linear-gradient(135deg, #fffbeb, #fef3c7); color:#d97706;">
+                    <i class="fa-solid fa-credit-card"></i>
+                </div>
+                <h3>Razorpay Subscriptions</h3>
+                <p>Secure payment checkouts. Upgrade workspaces via lifetime one-time payments or monthly auto-renewals with automatic webhook sync.</p>
+            </div>
+            <!-- Feature 8 -->
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="icon-box" style="background:linear-gradient(135deg, #fdf2f8, #fce7f3); color:#db2777;">
+                    <i class="fa-solid fa-file-pdf"></i>
+                </div>
+                <h3>Downloadable PDF Invoices</h3>
+                <p>A4 tax invoices generated dynamically. Track total paid, subtotal, GST (18%), and download PDFs on demand from your billing history.</p>
+            </div>
         </div>
     </section>
 
@@ -759,44 +791,55 @@
     <!-- Pricing Section -->
     <section class="section-padding pricing" id="pricing">
         <div class="section-header" data-aos="fade-up">
-            <span class="tag">Pricing</span>
-            <h2>Simple, Transparent Pricing</h2>
-            <p>Choose the plan that best fits your team's needs.</p>
+            <span class="tag">Pricing Plans</span>
+            <h2>Simple, Secure Billing via Razorpay</h2>
+            <p>Choose between flexible Monthly Subscriptions or One-Time upgrades for lifetime access.</p>
         </div>
         <div class="pricing-grid">
+            <!-- Starter -->
             <div class="price-card" data-aos="fade-up" data-aos-delay="100">
                 <h3>Starter</h3>
-                <div class="price">$49<span>/mo</span></div>
+                <div class="price">₹2,499<span>/mo</span></div>
+                <p style="font-size:12px; color:#64748b; margin-top:-10px; margin-bottom:15px;">or ₹23,999/year one-time</p>
                 <p>Perfect for small teams getting started with AI.</p>
                 <ul class="price-features">
-                    <li><i class="fa-solid fa-check"></i> Up to 5 Users</li>
-                    <li><i class="fa-solid fa-check"></i> 1,000 AI Credits/mo</li>
-                    <li><i class="fa-solid fa-check"></i> Basic Email Integration</li>
+                    <li><i class="fa-solid fa-check"></i> Up to 5 Active Users</li>
+                    <li><i class="fa-solid fa-check"></i> 1,000 AI Credits / month</li>
+                    <li><i class="fa-solid fa-check"></i> Standard Lead Scoring</li>
+                    <li><i class="fa-solid fa-check"></i> Email Template Builder</li>
                     <li><i class="fa-solid fa-check"></i> Standard Support</li>
                 </ul>
-                <a href="#demo" class="btn-price btn-price-outline">Get Started</a>
+                <a href="#demo" class="btn-price btn-price-outline">Get Started Now</a>
             </div>
+            <!-- Professional -->
             <div class="price-card popular" data-aos="fade-up" data-aos-delay="200">
                 <div class="popular-badge">Most Popular</div>
                 <h3>Professional</h3>
-                <div class="price">$149<span>/mo</span></div>
+                <div class="price">₹7,499<span>/mo</span></div>
+                <p style="font-size:12px; color:#c7d2fe; margin-top:-10px; margin-bottom:15px;">or ₹71,999/year one-time</p>
                 <p>Advanced features for growing sales teams.</p>
                 <ul class="price-features">
-                    <li><i class="fa-solid fa-check"></i> Up to 15 Users</li>
-                    <li><i class="fa-solid fa-check"></i> 10,000 AI Credits/mo</li>
-                    <li><i class="fa-solid fa-check"></i> WhatsApp Integration</li>
+                    <li><i class="fa-solid fa-check"></i> Up to 15 Active Users</li>
+                    <li><i class="fa-solid fa-check"></i> 10,000 AI Credits / month</li>
+                    <li><i class="fa-solid fa-check"></i> WhatsApp Cloud API Webhooks</li>
+                    <li><i class="fa-solid fa-check"></i> Automated Follow-up Emails</li>
+                    <li><i class="fa-solid fa-check"></i> Dynamic PDF Invoice Downloads</li>
                     <li><i class="fa-solid fa-check"></i> Priority Support</li>
                 </ul>
-                <a href="#demo" class="btn-price btn-price-solid">Start Free Trial</a>
+                <a href="#demo" class="btn-price btn-price-solid">Start Trial</a>
             </div>
+            <!-- Business / Enterprise -->
             <div class="price-card" data-aos="fade-up" data-aos-delay="300">
-                <h3>Enterprise</h3>
-                <div class="price">Custom</div>
-                <p>Dedicated solutions for large organizations.</p>
+                <h3>Business</h3>
+                <div class="price">₹19,999<span>/mo</span></div>
+                <p style="font-size:12px; color:#64748b; margin-top:-10px; margin-bottom:15px;">or ₹1,91,999/year one-time</p>
+                <p>Dedicated solutions for large scale organizations.</p>
                 <ul class="price-features">
-                    <li><i class="fa-solid fa-check"></i> Unlimited Users</li>
-                    <li><i class="fa-solid fa-check"></i> Unlimited AI Credits</li>
-                    <li><i class="fa-solid fa-check"></i> Custom Integrations</li>
+                    <li><i class="fa-solid fa-check"></i> Up to 50 Active Users</li>
+                    <li><i class="fa-solid fa-check"></i> 50,000 AI Credits / month</li>
+                    <li><i class="fa-solid fa-check"></i> Dedicated OpenAI Agent Tuning</li>
+                    <li><i class="fa-solid fa-check"></i> Continuous Activity Audit Trails</li>
+                    <li><i class="fa-solid fa-check"></i> Custom Integrations & APIs</li>
                     <li><i class="fa-solid fa-check"></i> Dedicated Account Manager</li>
                 </ul>
                 <a href="#demo" class="btn-price btn-price-outline">Contact Sales</a>

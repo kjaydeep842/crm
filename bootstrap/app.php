@@ -13,6 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->validateCsrfTokens(except: [
             '/webhook/whatsapp',
+            '/webhook/razorpay',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

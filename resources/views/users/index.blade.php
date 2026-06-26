@@ -2,8 +2,24 @@
 
 @section('header_title', Auth::user()->isSuperAdmin() ? 'Global Multi-Org Management' : 'Organization Staff Management')
 
+@section('styles')
+<style>
+    .users-layout-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 24px;
+        align-items: start;
+    }
+    @media (max-width: 992px) {
+        .users-layout-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+@endsection
+
 @section('content')
-<div style="display:grid;grid-template-columns: 2fr 1fr; gap: 24px; align-items: start;">
+<div class="users-layout-grid">
 
     {{-- Left Side: Users List --}}
     <div class="card" style="padding:0; overflow:hidden;">
@@ -22,66 +38,68 @@
             </div>
         </div>
 
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Organization</th>
-                    <th>Role / Title</th>
-                    <th style="text-align:right;">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($users as $u)
-                <tr>
-                    <td>
-                        <span style="font-weight:700; color:#1e293b; display:block;">{{ $u->name }}</span>
-                        @if($u->isSuperAdmin())
-                            <span style="font-size:9px; color:#ef4444; font-weight:700; text-transform:uppercase;">Global SuperAdmin</span>
-                        @endif
-                    </td>
-                    <td><span style="font-family:monospace; color:#475569;">{{ $u->email }}</span></td>
-                    <td>
-                        @if($u->organization)
-                            <span style="font-weight:600; color:#4f46e5;">{{ $u->organization->name }}</span>
-                        @else
-                            <span style="color:#94a3b8; font-style:italic;">No Org (SuperAdmin)</span>
-                        @endif
-                    </td>
-                    <td>
-                        @if($u->isSuperAdmin())
-                            <span class="badge b-high">SuperAdmin</span>
-                        @elseif($u->isAdmin())
-                            <span class="badge b-medium">Org Admin</span>
-                        @else
-                            <span class="badge b-low">Staff ({{ $u->staff_role ?: 'Sales' }})</span>
-                        @endif
-                    </td>
-                    <td style="text-align:right;">
-                        <div style="display:inline-flex; gap:6px;">
-                            {{-- Edit Button (triggers inline form or basic popup modal toggle via simple javascript) --}}
-                            <button onclick="openEditModal({{ json_encode($u) }})" class="btn btn-sm btn-light btn-icon" title="Edit User">
-                                <i class="fa-solid fa-pen" style="font-size:10px; color:#475569;"></i>
-                            </button>
-
-                            <form action="{{ route('users.destroy', $u->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this user?')" style="margin:0;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-light btn-icon" title="Delete User">
-                                    <i class="fa-solid fa-trash" style="font-size:10px; color:#be123c;"></i>
+        <div style="overflow-x:auto; width:100%;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Organization</th>
+                        <th>Role / Title</th>
+                        <th style="text-align:right;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($users as $u)
+                    <tr>
+                        <td>
+                            <span style="font-weight:700; color:#1e293b; display:block;">{{ $u->name }}</span>
+                            @if($u->isSuperAdmin())
+                                <span style="font-size:9px; color:#ef4444; font-weight:700; text-transform:uppercase;">Global SuperAdmin</span>
+                            @endif
+                        </td>
+                        <td><span style="font-family:monospace; color:#475569;">{{ $u->email }}</span></td>
+                        <td>
+                            @if($u->organization)
+                                <span style="font-weight:600; color:#4f46e5;">{{ $u->organization->name }}</span>
+                            @else
+                                <span style="color:#94a3b8; font-style:italic;">No Org (SuperAdmin)</span>
+                            @endif
+                        </td>
+                        <td>
+                            @if($u->isSuperAdmin())
+                                <span class="badge b-high">SuperAdmin</span>
+                            @elseif($u->isAdmin())
+                                <span class="badge b-medium">Org Admin</span>
+                            @else
+                                <span class="badge b-low">Staff ({{ $u->staff_role ?: 'Sales' }})</span>
+                            @endif
+                        </td>
+                        <td style="text-align:right;">
+                            <div style="display:inline-flex; gap:6px;">
+                                {{-- Edit Button (triggers inline form or basic popup modal toggle via simple javascript) --}}
+                                <button onclick="openEditModal({{ json_encode($u) }})" class="btn btn-sm btn-light btn-icon" title="Edit User">
+                                    <i class="fa-solid fa-pen" style="font-size:10px; color:#475569;"></i>
                                 </button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="5" style="text-align:center; color:#94a3b8; padding:32px;">No users or staff managed yet.</td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
+    
+                                <form action="{{ route('users.destroy', $u->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this user?')" style="margin:0;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-light btn-icon" title="Delete User">
+                                        <i class="fa-solid fa-trash" style="font-size:10px; color:#be123c;"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="5" style="text-align:center; color:#94a3b8; padding:32px;">No users or staff managed yet.</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
 
     {{-- Right Side: Create User Form / Create Org Form --}}

@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Lead;
-use App\Models\User;
 use App\Models\Activity;
+use App\Models\User;
+use App\Models\ActivityLog;
+use App\Models\NotificationLog;
 use App\Models\Meeting;
 use App\Models\Task;
 use App\Services\AIService;
@@ -99,6 +101,19 @@ class LeadController extends Controller
             'type' => 'Call',
             'description' => 'Lead manually created in the system.'
         ]);
+
+        // Audit Log
+        ActivityLog::log('created', "New lead '{$lead->full_name}' created", 'Lead', $lead->id);
+
+        // Notify all org admins
+        if ($user->organization_id) {
+            $admins = User::where('organization_id', $user->organization_id)->where('role', 'admin')->pluck('id');
+            foreach ($admins as $adminId) {
+                if ($adminId != $user->id) {
+                    NotificationLog::send($adminId, 'lead_created', "New Lead: {$lead->full_name}", "{$user->name} added a new lead from {$lead->company_name}.", route('leads.show', $lead->id));
+                }
+            }
+        }
 
         // Auto-trigger AI Analysis
         $this->analyzeLeadAI($lead);
