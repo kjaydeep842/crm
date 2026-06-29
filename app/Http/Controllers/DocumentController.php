@@ -48,9 +48,9 @@ class DocumentController extends Controller
         $lead = Lead::findOrFail($request->lead_id);
         $user = Auth::user();
         
-        $org = clone $user->organization;
+        $org = $user->organization;
         if (!$org && $user->isSuperAdmin()) {
-            $org = clone \App\Models\Organization::first();
+            $org = \App\Models\Organization::first();
         }
         
         if ($org && !$org->hasAiCredits(20)) {
